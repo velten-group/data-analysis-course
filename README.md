@@ -2,14 +2,19 @@
 This repository contains the materials for the course on Data Analysis for Life Sciences taught at Heidelberg university for the DSCB major.
 
 ## Preparations
-For the course you need to bring a laptop and install the following:
-- R [LINK](https://cran.r-project.org/) - Please make sure that your R version is 4.3.
-- RStudio [LINK(https://posit.co/products/open-source/rstudio/)
-- optional: GitHub Desktop [LINK](https://desktop.github.com/)
+1. Sign in to the Slack Workspace for this course [invitation link]
+2. Complete the [pre-course survey] by Friday (Oct 27)
+3. For the course you need to bring a laptop with the following installed:
+- R [LINK](https://cran.r-project.org/) - If you already have an existing installation of R, please make sure that your R version is 4.3.
+- RStudio [LINK](https://posit.co/products/open-source/rstudio/)
+  
+If you have problems with the installation, take a look at [this video](https://www.youtube.com/watch?v=p8F_wreHTzw) on how to install R and RStudio.
 
-If you encounter problems, take a look at [this tutorial](https://rstudio-education.github.io/hopr/starting.html)) on how to install R and RStudio.
+4. Once you have installed R and RStudio, please open [this file](0_preparations.Rmd) with RStudio and follow the instructions in the file. *Note that this file contains a few tasks for you to verify that everyone has a working R installation, please complete them by Nov 3*
 
-Once you have installed R and RStudio, please open RStudio and open [this file] with RStudio and click on the "Knit" button on the top. 
+If you encounter any problems, get help via the Slack *#help* channel and/or at a *helpdesk session* on Nov 2 and 3, 10-12am on the 4th floor of INF230.
+
+ 
 
 
 ## Literature
