@@ -3,14 +3,14 @@ This repository contains the materials for the course on Data Analysis for Life 
 
 ## Preparations
 1. Sign in to the Slack Workspace for this course [click here to join](https://join.slack.com/t/data-analysis-dscb/shared_invite/zt-24ledzuk1-6uAvJVzuEnSHHHVa0ruKhg)
-2. Complete the [pre-course survey](https://forms.gle/cC6bLCsXwP7DNBLz9) by Friday (Oct 27)
+2. Complete the [pre-course survey](https://forms.gle/cC6bLCsXwP7DNBLz9) by *Friday Oct 27*
 3. For the course you need to bring a laptop with the following installed:
 	- [R](https://cran.r-project.org/) - If you already have an existing installation of R, please make sure that your R version is 4.3.
 	- [RStudio](https://posit.co/products/open-source/rstudio/)
   
 	If you have problems with the installation, take a look at [this video](https://www.youtube.com/watch?v=p8F_wreHTzw) on how to install R and RStudio.
 
-4. Once you have installed R and RStudio, please download and open [this file](exercises/0_preparations.Rmd) with RStudio and follow the instructions in the file. *Note that this file contains a few tasks for you to verify that everyone has a working R installation, please complete them by Nov 2*
+4. Once you have installed R and RStudio, please go to the [exercises](exercises/) page. There you will find two exercises to verify that everyone has a working R installation setup before the course and provides a recap on first steps in R. *Please take a look at both exercises before November 2 and hand in the output in via Slack (see details in the exercises)*
 
 If you encounter any problems, get help via the Slack *#help* channel.
 
@@ -21,5 +21,6 @@ Recommended book for further reading include:
 - [*Modern Statistics for Modern Biology*](https://www.huber.embl.de/msmb/) by Susan Holmes and Wolfgang Huber
 - [*An introduction to statistical learning*](https://www.statlearning.com/) by James, Witten, Hastie and Tibshirani with video lectures available [here](https://www.youtube.com/playlist?list=PLOg0ngHtcqbPTlZzRHA2ocQZqB1D_qZ5V)
 
-## Exercises and course evaluation
-TBD
+## Exercises
+[Here](exercises/) you will find the exercises for our course.
+

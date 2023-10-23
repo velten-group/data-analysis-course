@@ -1,0 +1,67 @@
+---
+title: Welcome!
+author: "Britta Velten"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Welcome to the DSCB Data Analysis Course
+
+The purpose of this file is to verify that you have successfully installed R and RStudio.
+
+If you are completely new to R or think a recap would be helpful, I would recommend to watch this [youtube video](https://www.youtube.com/watch?v=p8F_wreHTzw) and go through the Swirl tutorial on *R Programming: The basics of programming in R* (as explained at the end of the video) before our course. In addition, the following resources might be useful:
+
+* Chapter 1-3 of Rafael A. Irizarry's [*Introduction to Data Science*](http://rafalab.dfci.harvard.edu/dsbook/introduction.html)
+* [Babraham R Course](https://www.bioinformatics.babraham.ac.uk/training/Introduction_to_R/Introduction%20to%20R%20course%20booklet.pdf)
+
+<mark>**Your task**: Please generate a html version of this file (following the steps described below) and *hand this in by November 2 via Slack*.</mark> 
+
+Make sure you get help if you encounter any problems via the Slack *help* channel.
+
+
+# First steps with R using RStudio and RMarkdown
+
+## Step 0: Getting to know RMarkdown
+
+This is an RMarkdown `.Rmd` file. RMarkdown allows you to combine text with code chunks. Code chunks look like this:
+
+```{r}
+# This is a code chunk
+# The hash key at the beginning indicates that this line is a comment and not evaluated as code
+```
+
+```{r my_code_chunk}
+# Code chunks can also have names, here 'my_code_chunk'. 
+# These will not appear in the output but can for example be useful to identify chunks giving errors
+```
+For details on RMarkdown see for example <http://rmarkdown.rstudio.com> and <https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf> or a short video at <https://rmarkdown.rstudio.com/lesson-1.html>
+
+
+## Step 1: Knit this RMarkdown document to produce an html report
+
+By clicking on the "**Knit**" button on top of this panel we will produce a `.html` report that displays the text and evaluates the code in the `.Rmd` file displaying both the code as well as its output. 
+
+The `.html` file will open automatically and is also saved in the same folder (and with the same name) as the `.Rmd` script.
+
+<mark>**Task 1: Knit this file and verify that you can find and open the `.html` file. Go back to the Rmd file, change the author name at the top of the file to your own name and knit the file again to receive a `.html` file with your name on top.**</mark>
+
+
+## Step 2: Checking your R version
+
+```{r}
+if(version$major < 4 | version$minor < 3) {
+  print("Your R version is not up-to-date. Please download the latest R version (4.3)")
+} else {
+  print("Your R version is up-to-date.")
+  }
+```
+
+<mark>**Task 2 Take a look at the output of this code chunk in the html file to see if your R version is up-to-date.**</mark> If your R version is not up-to-date, you can update it by installing the latest version from this [LINK](https://cran.r-project.org/). After the installation you need to re-open RStudio and re-run this file to check whether you now have the latest version.
+
+## Step 3: Showing the details of your current R session
+At the end of each Rmd file it is useful to print the output of the `sessionInfo()` function. This is important for reproducibility as it helps you and others to go back to a html report, which you did in the past and see which operating system, R version and package versions you used.
+
+```{r}
+sessionInfo()
+```
+

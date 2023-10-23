@@ -1,0 +1,365 @@
+---
+title: "First steps in R programming"
+author: "Britta Velten"
+date: "`r Sys.Date()`"
+output:
+  html_document
+---
+
+This file recapitulates the first steps of R programming. If you are completely new to R or think a recap would be helpful, I would recommend to watch this [youtube video](https://www.youtube.com/watch?v=p8F_wreHTzw) and go through the Swirl tutorial on *R Programming: The basics of programming in R* (as explained at the end of the video) before our course. In addition, the following resources might be useful:
+
+* Chapter 1-3 of Rafael A. Irizarry's [*Introduction to Data Science*](http://rafalab.dfci.harvard.edu/dsbook/introduction.html)
+* [Babraham R Course](https://www.bioinformatics.babraham.ac.uk/training/Introduction_to_R/Introduction%20to%20R%20course%20booklet.pdf)
+
+<mark>**Your task**: Please generate a html version of this file (following the steps described below) and *hand this in by November 2 via Slack*.</mark>
+
+Don't worry if you encounter problems, we will jointly go through the file on the first day of the course.
+
+## First steps in R programming
+
+Here we will introduce a few basic commands in R.
+
+### Basic calculations
+
+Basic calculations in R can be performed like in any calculator.
+
+<mark>**Task 1: Look at the output of the code chunks below and add a new code chunk to calculate the the product of 5 times 2.7** </mark> (See the +C button on the top right corner of this file or use "Code" > "Insert Chunk" from the RStudio menu on top or the keyboard shortcut for it). You can include new text explaining what you do in the chunk.
+
+To test what happens in a single code chunk you can evaluate a single code chunk by clicking on the "play" button on the top right corner of a code chunk and you will see the output directly underneath the code chunk in RStudio. You can also execute a single line of code where your cursor is or a number of lines which you selected by using CTRL  + ENTER (Windows) or CMD + ENTER (Mac).
+
+Adding two numbers:
+```{r}
+2 + 3
+```
+
+Dividing a number by another
+```{r}
+2/9
+```
+
+Taking the square of a number
+```{r}
+4^2
+```
+
+### Variable assignments
+Values can be assigned to variables with custom names using `<-` or `=`. Values can for example be numbers (numeric), text (single characters "a","b", "c" or a string which is a sequence of characters "abc") or logicals (`TRUE`, `FALSE`, `NA` = not available).
+```{r}
+a <- 1
+a
+```
+
+```{r}
+a = 1
+a
+```
+
+It is useful to use meaningful names for the variables that tell you what they define.
+```{r}
+my_favorite_food <- "pasta"
+my_favorite_food
+```
+
+```{r}
+elephants_are_large <- TRUE
+elephants_are_large
+```
+
+Once assigned, you can use the variables in calculations and assign new variables based on existing ones.
+```{r}
+a <- 1
+b <- a + 5
+b
+```
+
+If you assign a new value to a variable that already exists, the old value will be over-written.
+```{r}
+a
+a <- 3
+a
+```
+
+Note that `<-` and `=` can be used for assigning a variable to a value. In contrast `==` is used to check if an (existing) variable is equal to a specified value. Such comparison return `TRUE` or `FALSE` as logical values that specify if a condition is met or not.
+```{r}
+a == 1
+```
+
+```{r}
+a == 3
+```
+
+If you would like to delete a variable that you defined use `rm`.
+```{r}
+rm(b)
+```
+
+Now the following code should produce an error `Error: object 'b' not found`. Test it by executing the code. Note that we will therefore not evaluate the code chunk when generating the html file as indicated by `eval = FALSE` in the definition of the code chunk.
+```{r, eval = FALSE}
+# not evaluated, would produce an Error: object 'b' not found
+b
+```
+
+You can see which variables exist in the top right panel of RStudio ("Environment") or by using the `ls()` command. Note that `b` should now be removed and no longer exist.
+```{r}
+ls()
+```
+
+<mark>**Task 2: Add a new code chunk to assign a new variable that stores your age and re-run the `ls()` function to verify the variable exists.** </mark>
+
+### Vectors
+You can assign multiple values in form of a vector to a variable by combining them with the function `c`. This can again be characters, numbers, logicals. When different data types are mixed they are converted from logicals to numbers and from logicals and numbers to characters to have only elements of the same type in a vector. 
+```{r}
+my_favorite_food_and_drink <- c("pizza", "beer")
+
+mixed_vector <- c(10, "pizzas", "apples", TRUE)
+mixed_vector # all elements here have been converted to characters
+
+vector_with_numbers <- c(10, 1, 35, 13)
+vector_with_numbers
+```
+
+Vectors can have names.
+```{r}
+# naming elements in an existing vector
+names(mixed_vector) <- c("number", "food", "fruits", "logical")
+mixed_vector
+
+# or directly name the elements when creating the vector
+mixed_vector <- c(number = 10, food = "pizzas", fruits = "apples", logical = TRUE)
+mixed_vector
+```
+The function `length` will tell you how many elements there are in a vector.
+```{r}
+length(mixed_vector)
+```
+
+Vectors can be subsetted to extract values based on their position(s) in the vector or their name. *Note: In contrast to other programming languages (e.g. Python) R starts counting at 1:*
+```{r}
+mixed_vector[1]
+mixed_vector[c(2,3)]
+mixed_vector["food"]
+```
+
+This can be used to assign new values to specific elements of a vector.
+```{r}
+mixed_vector
+mixed_vector["food"] <- "pasta"
+mixed_vector
+```
+
+You can perform comparisons on the whole vector.
+```{r}
+# Are the elements of a vector smaller than 11?
+vector_with_numbers < 11
+
+# check how many elements in a vector fulfil this condition
+sum(vector_with_numbers < 11)
+
+# and use this for subsetting a vector to elements that fulfil this condition 
+vector_with_numbers[vector_with_numbers < 11]
+
+# or assign new values for those elements
+vector_with_numbers[vector_with_numbers < 11] <- 0
+vector_with_numbers
+```
+
+A sequence can be used to generate a vector with consecutive numbers which is often useful to not having to manually write down all numbers.
+```{r}
+my_sequence <- 1:10
+my_sequence
+
+# or 
+my_sequence <- seq(from = 1, to = 10) # see ?seq for details
+my_sequence
+
+# only every second number
+my_sequence_odd_numbers <- seq(1,11, by = 2)
+my_sequence_odd_numbers
+
+# Extract the first 3 entries of a vector
+vector_with_numbers[1:3]
+```
+
+<mark>**Task 3: Generate your own vector with 4 numbers of your choice. Extract the first two elements of this vector. What happens if you try to extract the 5th element of the vector?**</mark>
+
+### Matrices
+Working with matrices is very similar to vectors just that they have two dimensions instead of one. 
+```{r}
+my_matrix <- matrix(1:12, nrow = 3 , ncol = 4)
+my_matrix
+```
+
+To access individual elements we now use two indices. 
+```{r}
+my_matrix[1,2] # element in row 1, column 2
+
+my_matrix[1,2:4] # elements in row 1, column 2 to 4
+
+# By default, R throws away dimensions that are not used when subsetting, e.g. only keeping a 1-dimensional vector. If you would like to keep the data in matrix format use `drop = FALSE`
+my_matrix[1,2:4, drop = FALSE] 
+```
+
+Again we can use names for the columns and rows
+```{r}
+colnames(my_matrix) <- c("cell1", "cell2", "cell3", "cell4")
+rownames(my_matrix) <- c("gene1", "gene2", "gene3")
+my_matrix
+```
+
+And make use of the names to access an element.
+```{r}
+my_matrix["gene1", "cell2"]
+```
+
+The function `dim` tells you how many rows and columns a matrix has
+```{r}
+dim(my_matrix)
+```
+
+With transpose `t` you can transpose the matrix to have rows as columns and columns as rows
+```{r}
+t(my_matrix)
+```
+
+### Lists
+Similar to a vector you can create a list containing several elements with the `list` function. In contrast to vectors or matrices, lists can mix different datatpyes (numbers, characters, logicals) without converting them to the same type.
+```{r}
+my_list <- list("a", 10, "Miami", TRUE)
+my_list
+```
+
+Like vectors list elements can have names
+```{r}
+my_list <- list(my_character = "a", my_number = 10, my_city ="Miami", my_logical = TRUE)
+my_list
+```
+
+You can access elements in a list using `[[..]]` with position or name or `$` with the name. Using `$` will show you available names for auto-completion in RStudio.
+```{r}
+my_list[[1]]
+my_list[["my_number"]]
+my_list$my_number
+```
+
+Lists can have more complex elements for example a vector or another list.
+```{r}
+my_complex_list <- list(my_list = my_list, my_sequence = 1:10, my_string = "hello")
+my_complex_list
+```
+
+```{r}
+my_complex_list$my_sequence
+
+# access elements in a nested list by using `$` several times
+my_complex_list$my_list$my_character
+```
+
+<mark>**Task 4: Generate your own list with 5 entries specifying the number of siblings you have, a favorite food, a place you want to travel, a hobby and whether you have pets (as a logical). Extract the the place you want to travel from the list.**</mark>
+
+### Functions
+Functions usually take some input and perform some code with it and return an output. Many useful functions are implemented in R or specific R packages. For example, we can use `log` to calculate the logarithm of a value
+```{r}
+log(10)
+```
+
+Using `?` before a function name will open R help in the bottom right window and give you an explanation on what the function is doing, which input it takes and what it returns
+```{r}
+?log
+```
+
+Functions can be called on variables that you defined previously.
+```{r}
+log(a)
+
+sum(my_sequence)
+```
+
+You can define you own functions with the following syntax.
+```{r}
+# Function with 1 argument
+add_three <- function(x){
+  x + 3
+}
+add_three(4)
+```
+
+```{r}
+# Function with 2 arguments
+order_food <- function(n, food){
+  # note: The paste function concatenates several characters to a single character string
+  # separated (by default) by a space, see ?paste for details
+  print(paste("I want", n, food)) 
+}
+```
+```{r}
+order_food(10, "pizzas")
+```
+
+<mark>**Task 5: Write your own function that takes two values as input and returns twice their sum.**</mark>
+
+### Loops
+Sometimes you want to execute a function multiple times with different inputs. For this loops can be useful to not write the same code multiple times with small changes:
+```{r}
+for(i in 3:8){
+  order_food(i, "pizzas")
+}
+```
+
+<mark>**Task 6: Write your own loop that prints out all integer numbers from 1 to 10 using the print function.**</mark>
+
+### If/Else statements
+If statements can be useful if you want to execute code only under some conditions. 
+```{r}
+hungry <- TRUE
+if(hungry) order_food(10, "pizzas")
+```
+
+Combined with an Else statement, a second code  block can be added that is evaluate in case in the condition is not met. The brackets are important to tell R when a code block in the if-else statement start and when it ends.
+```{r}
+hungry <- FALSE
+if(hungry) {
+  x <- 10
+  order_food(x, "pizzas")
+} else {
+  x <- 0
+  order_food(x, "pizzas")
+}
+```
+
+<mark>**Task 7: Combine a loop with an if-else statement to check for all integer numbers between 1 and 20 if their logarithm is larger than 1.5. How could you do this using calculations on a vector instead of the loop?**</mark>
+
+### Installing packages
+
+Many useful functions are not available in base R but are provided by tailored packages. For example, `ggplot2` is a useful  package, which we will make use of in the course for plotting and data visualization. New packages can be installed as follows:
+```{r}
+if(!"ggplot2" %in% installed.packages()) # only installs the package if not yet available, "!" meant "not" in R language
+  install.packages("ggplot2")
+```
+
+If you want to use functions of a package you need to load the package at the beginning of your code. Then we can for example make use of the `qplot` function to plot the values 1 to 10 on the x axis and their logarithm on the y axis. (Note: We will take a closer look at ggplot2 during the course.)
+```{r, warning = FALSE}
+library(ggplot2)
+qplot(x = 1:10, y = log(1:10))
+```
+
+<mark>**Task 8: Install the following package: `tidyverse`. This is a collection of packages useful for data handling and visualization.**</mark>
+
+### Cheat Sheet
+An overview over important functions, data types and data structures in R is summarized in this [cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf). 
+
+<mark>**Task 9: Take a look and save it for later use.** </mark>
+
+### Final notes
+At the end of each Rmd file it is useful to print the output of the `sessionInfo()` function. This is important for reproducibility as it helps you and others to go back to a html report, which you did in the past and see which operating system, R version and package versions you used.
+
+<mark>**Task 10: Knit the .Rmd file with all your changes and solutions by clicking on the "Knit button" for the tasks and send the html to Britta Velten via Slack. Make sure to change the author name to your name before knitting. Don't worry if you encounter problems, we will jointly go through the file on the first day of the course ** </mark>
+
+Optional tasks: 
+
+* You can install the `BiocStyle` package and modify the header of this file to `output: html_document` to `output: BiocStyle::html_document` for a slightly nicer layout of your html file which is used in [Bioconductor](https://www.bioconductor.org/) packages. 
+* You can add a table of content to your report by adding `toc: true` to the header of the `.Rmd` file, see e.g. <https://bookdown.org/yihui/rmarkdown/html-document.html>. Note the ":" after the `html_document`.
+
+```{r}
+sessionInfo()
+```
+
