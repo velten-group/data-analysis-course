@@ -2,8 +2,8 @@
 This repository contains the materials for the course on Data Analysis for Life Sciences taught at Heidelberg university for the DSCB major.
 
 ## Preparations
-1. Sign in to the Slack Workspace for this course [click here to join](https://join.slack.com/t/data-analysis-dscb/shared_invite/zt-24ledzuk1-6uAvJVzuEnSHHHVa0ruKhg)
-2. Complete the [pre-course survey](https://forms.gle/cC6bLCsXwP7DNBLz9) by *Friday Oct 27*
+1. Sign in to the Slack Workspace for this course
+2. Complete the pre-course survey by *Friday Oct 27*
 3. For the course you need to bring a laptop with the following installed:
 	- [R](https://cran.r-project.org/) - If you already have an existing installation of R, please make sure that your R version is 4.3.
 	- [RStudio](https://posit.co/products/open-source/rstudio/)
