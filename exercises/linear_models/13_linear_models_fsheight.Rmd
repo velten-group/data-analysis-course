@@ -1,0 +1,52 @@
+---
+title: "Using linear regression to predict heights"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+We will use the tidyverse and UsingR packge. Load these libraries here (and install them if needed).
+```{r}
+# to be filled
+```
+
+1. The UsingR package contains data on father's height and his son's height. Use `?father.son` to find our more and `head(father.son)` to take a first glimpse at the data.
+```{r}
+# to be filled
+```
+
+2. Draw a scatterplot of the height of father versus son. What is the correlation of the two variables? Would you expect a very different result when using Spearmans' correlation? Verify this.
+```{r}
+# to be filled
+```
+
+3. Now we aim to describe this relationship by a line. To learn the intercept and slope of the data we can use the `lm` function.
+```{r}
+# to be filled
+```
+
+4. Call the `summary` function on the result of the last task. How do you interpret the results?
+```{r}
+# to be filled
+```
+
+4. Let's add the fitted line to our plot using `geom_line` with the learnt slope and intercept.
+```{r}
+# to be filled
+```
+
+
+5. We can now make a prediction for a son of a 75in-tall father. Create a new data.frame containing the father height for which you want to make predictions. Note the column name must match the ones from the original data frame (father.son). Then use the `predict` function with the new data and the output of the `lm` call to make a prediction of the son's height. Add this point to the plot above.
+```{r}
+# to be filled
+```
+
+6. (optional) Use `plot` on the object created by the `lm` function. How can you use the output to check if your model is an appropriate model?
+```{r}
+# to be filled
+```
+
+```{r}
+sessionInfo()
+```
+

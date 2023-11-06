@@ -1,0 +1,53 @@
+---
+title: "Multivariate linear regression"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+We will use the tidyverse and UsingR packge. Load these libraries here (and install them if needed).
+```{r}
+# to be filled
+```
+
+Load the New York City Marathon data using `data(nym.2002)` and use the help function or `?` to get more infromation on the data. Inspect the data using `head` or `View`.
+```{r}
+# to be filled
+```
+We want to find out what predicts a good finish time. 
+
+Use the `lm` function to relate the finish time to age and gender of the runner. Use the `summary` function to get information on the fit. How do you interpret the results? Is a linear model a good model for describing the relationship?
+```{r}
+# to be filled
+```
+
+Visualize the relationship of age and finish time for male and female runners. Can you plot the linear relationship learnt by the model for each gender on this plot?
+```{r}
+# to be filled
+```
+
+Modify the data and the linear model to also include information on whether the runner is from New York (NY) or not. Are runners from NY significantly faster than others?
+```{r}
+# to be filled
+```
+
+## Advanced exercises
+Use `anova` function to compare the fits obtained from the `lm` calls with and without the information on whether the runner is from New York. What does this tell you? (Note: This function compares the goodness of fit between two so-called nested models, where one model is an extension of the other model).
+```{r}
+# to be filled
+```
+
+What happens if you include another variable in the model that specifies the (approx.) year of birth (calculated as 2002 - age) for each runner? 
+```{r}
+# to be filled
+```
+
+Some people might actually be born one year earlier if there birthday is yet to come in the year 2002. Let's randomly subtract 1 from some birth years. Hint: Use ` sample(c(1,0), replace = TRUE, size = nrow(nym.2002))` and subtract this from the year of birth. Re-run the linear model including gender, age, runner is from NY and year of birth as predictors. How do you interpret the results? What would you expect from an anova that compares a model including gender, age, runner is from NY and year of birth to a model including only gender and runner is from NY.
+```{r}
+# to be filled
+```
+
+```{r}
+sessionInfo()
+```
+

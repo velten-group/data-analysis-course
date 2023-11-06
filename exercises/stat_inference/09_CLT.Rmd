@@ -1,0 +1,73 @@
+---
+title: What does the sample mean tell us about the population?
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+Load the tidyverse package.
+```{r}
+# to be filled
+```
+
+# Importing the data into R
+Load in the female mice data into R.
+```{r}
+# to be filled
+```
+
+Calculate the population mean based on all mice.
+```{r}
+# to be filled
+```
+
+Now draw a sample of 10 mice from the data and calculate its mean. Repeat this 10,000-times using a for-loop or for example the `lapply` or `sapply` functions (take a look at the help of these functions). Create a data.frame with the 10,000 sample means calculated for each sample. (Note: If this takes too long on your laptop, only repeat this 100 times)
+
+Optional hint (if you would like to use `lapply` or `sapply` instead of a loop): The following code gives an example on how to use the `lapply` or `sapply` function to directly generate a data frame. Take a look at the individual steps and modify it to use it for the task above.
+```{r}
+# hint on using sapply
+my_vector <- sapply(1:10, function(x) {
+  log(x)
+  })
+my_df <- data.frame(x=1:10, logx = my_vector)
+
+# hint on using lapply
+my_list <- lapply(1:10, function(x) {
+  data.frame(x=x,
+             logx = log(x))
+})
+my_df <- bind_rows(my_list)
+head(my_df)
+```
+
+```{r}
+# to be filled
+```
+
+How well do the sample means estimate the population mean. Plot a histogram of the sample means - where would the population mean lie in there? Add a line to the plot specifying the population mean using `geom_vline`.
+```{r}
+# to be filled
+```
+
+Optional: Use the qqnorm function to compare the quantiles of the sample means to a normal distribution.
+```{r}
+# to be filled
+```
+
+Repeat the same exercise with samples of 3,5 and 20 mice instead of 10 mice. How do you expect the results to change? Verify this by plotting again the histogram for each sample size (3,5,10,20) comparing to the true population mean.
+```{r}
+# to be filled
+```
+
+Optional (very advanced): The observation above can be formalized by the so-called central limit theorem, which states that the sample mean (in the limit of infinite sample size) follows a normal distribution around the true population mean and with a variance given by the sample variance divided by the number of samples.
+
+Draw again a single sample of 10 mice from the data and calculate its mean. How confident would you be to conclude that an interval around this value +/- 1g, 2g or 3g covers the true population mean? (Hint: The dnorm function gives you the density for a normal distribution with a given mean and standard deviation.)
+```{r}
+# to be filled
+```
+
+Print your session info.
+```{r}
+# to be filled
+```
+

@@ -113,10 +113,19 @@ my_favorite_food_and_drink <- c("pizza", "beer")
 
 mixed_vector <- c(10, "pizzas", "apples", TRUE)
 mixed_vector # all elements here have been converted to characters
+class(mixed_vector)
 
-vector_with_numbers <- c(10, 1, 35, 13)
-vector_with_numbers
+vector_with_numbers <- c(3, 1, 35, 13)
+vector_with_numbers # this is a numeric vector
+class(vector_with_numbers) 
 ```
+
+Sidenote: You can convert all elements to a specific type in the vector using `as.character` (to convert to characters), `as.numeric` to convert to numbers/numeric or `as.logical` to convert to logicals. Note that everything can be represented as a character but not vice versa. In such cases R will set the value that have no clear corresponding number or logical to `NA`.
+```{r}
+as.numeric(mixed_vector)
+as.character(vector_with_numbers)
+```
+
 
 Vectors can have names.
 ```{r}
@@ -262,8 +271,8 @@ Functions usually take some input and perform some code with it and return an ou
 log(10)
 ```
 
-Using `?` before a function name will open R help in the bottom right window and give you an explanation on what the function is doing, which input it takes and what it returns
-```{r}
+Using `?` before a function name will open R help in the bottom right window and give you an explanation on what the function is doing, which input it takes and what it returns. Note that this chunk is not evaluated when knitting but only used in interactive mode. Otherwise on some systems you might end up with just seeing the help of the `log` function.
+```{r, eval = FALSE}
 ?log
 ```
 
@@ -331,10 +340,12 @@ if(hungry) {
 ### Installing packages
 
 Many useful functions are not available in base R but are provided by tailored packages. For example, `ggplot2` is a useful  package, which we will make use of in the course for plotting and data visualization. New packages can be installed as follows:
-```{r}
+```{r, eval = FALSE}
 if(!"ggplot2" %in% installed.packages()) # only installs the package if not yet available, "!" meant "not" in R language
   install.packages("ggplot2")
 ```
+Note that a package should not be installed as part of a .Rmd report as this would re-install the package every time you knit the Rmd can results and can result in errors during the knitting of the document that are difficult to debug. Make sure to install all required packages in the console in an interactive manner before knitting the document and load them in the Rmd document using`library()`, e.g. `library(ggplot2)`.
+
 
 If you want to use functions of a package you need to load the package at the beginning of your code. Then we can for example make use of the `qplot` function to plot the values 1 to 10 on the x axis and their logarithm on the y axis. (Note: We will take a closer look at ggplot2 during the course.)
 ```{r, warning = FALSE}

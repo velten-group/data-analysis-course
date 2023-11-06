@@ -1,0 +1,33 @@
+---
+title: T-test
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+Load the tidyverse library.
+```{r}
+# to be filled
+```
+
+# Importing the data into R
+Read in the female mice weight data.
+```{r}
+# to be filled
+```
+
+# Conduct a t-test
+Use the `t.test` function to conduct a t.test for weight difference between mice on a chow and hf diet.
+```{r}
+# to be filled
+```
+
+How do you interpret the results?
+
+
+Print the session info and knit the html report.
+```{r}
+# to be filled
+```
+
+

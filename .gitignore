@@ -1,3 +1,6 @@
 *.html
 Slides/
 *.docx
+.DS_Store
+solutions/
+.Rhistory

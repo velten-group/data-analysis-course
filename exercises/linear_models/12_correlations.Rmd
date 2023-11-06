@@ -1,0 +1,43 @@
+---
+title: "Calculating correlations"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+0. Load the tidyverse package collection.
+```{r}
+# to be filled
+```
+
+1. Install and load the following package: `remotes`. Then run the following R code in the console `remotes::install_github("ngay/kustats")`. 
+```{r, eval = FALSE}
+# to be filled
+```
+
+Now you can load and use the `kustats` R package which contains some useful data sets.
+```{r}
+# to be filled
+```
+
+2. After loading the `kustats` pacakge, take a look at the data `ds16_Nobel_Laureates_and_Chocolate`. What is measured here. Use the `help` function to find out details.
+```{r}
+# to be filled
+```
+
+3. Calculate the Pearson and the Spearman correlation across all countries between the 4 variables CHOCLATE, NOBEL, POPULATION, INTERNET using the `cor` function. With the `method` argument you can specify the type of correlation you want to calculate, e.g. `pearson`, `spearman`. Which pair of variables has the highest correlation? 
+```{r}
+# to be filled
+```
+
+4. Make a scatterplot of these two to visualize the relationship of the two variables with strongest correlation. Optionally: Annotate points by Country name using `geom_label`
+```{r}
+# to be filled
+```
+
+5. How do you interpret this relationship?
+
+```{r}
+sessionInfo()
+```
+

@@ -1,0 +1,193 @@
+---
+title: First steps in data import and data manipulation using dpylr
+author: "Britta Velten (adapted from Rafael Irizarry & Mike Love)"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Importing the data into R
+Using the dataset on female mice weights for different diets we will illustrate how to import the data into R. Fort this, first download the data set from the course gitHub repository.
+
+For ".csv" files we can use the function `read.csv` with the argument given by the path to the file's location, e.g `femaleMiceWeights.csv`. For this to work, the file needs to be located in the same folder as your .Rmd file. (Note: In R you can also always use the command `getwd()` to see in which folder you are currently working in with R.)
+```{r}
+getwd()
+```
+
+Let's have a try to read-in the data:
+```{r}
+filename <- "femaleMiceWeights.csv"
+mice_data <- read.csv(filename)
+```
+
+If the file is in a different directory you can modify the argument `femaleMiceWeights.csv` to a relative path, e.g. `data/femaleMiceWeights.csv` if the file is in a subdirectory called `data` of you current directory, or to an absolute path, e.g `/Users/bvelten/data/femaleMiceWeights.csv`. RStudio helps with auto-completion here to find the file. To move one level of directories up in relative paths you can use `..`, e.g. `../data/femaleMiceWeights.csv` if the file is in a data directory located one folder up from your current working directory. Find the file and adjust the file path above if needed to read in the data!
+
+# First glimpse at the data
+The function `read.csv` returns the data in form of a `data.frame`. (Use `class` to verify this as showns below.)
+
+```{r}
+class(mice_data)
+```
+
+This class is very convenient for analyzing data that contains measurements for several variables that are of different types, e.g. some are characters (here: Diet), others are numeric (here: Bodyweight).
+
+To take a first look at the data the function `head()` is useful as it prints out the first rows of your data.frame. This allows you to get a first idea of the data without printing out the whole data.frame (can be very messy e.g. for data with 20,000 genes etc). For each variable (columns) this also tells you what data type the values of this column have. Here for example, "Diet" contains characters (chr), "Bodyweight" contains doubles (dbl) (a numeric data type for floating point numbers).
+```{r}
+head(mice_data)
+```
+
+```{r, eval = FALSE}
+# To open the data in an interactive viewer in RStudio you can also use the function "View()"
+# note that we will not evaluate this line of code in the report as this is intended for interactive use
+View(mice_data)
+```
+
+The function `nrow` tells you how many rows are in the table. Here, each row corresponds to one mouse.
+```{r}
+nrow(mice_data)
+```
+
+To select an individual value or row in the data frame we can use `[row index, column index or name]`, e.g. extracting the weight value of the second mouse in the data frame.
+```{r}
+mice_data[2,"Bodyweight"]
+```
+
+or referring to the column index of the "Bodyweight" column:
+```{r}
+mice_data[2,2]
+```
+
+Similarly we can also extract the whole row from the data frame as a new data.frame containing only the variables for one or a subset of mice
+```{r}
+# second mouse in the data
+mice_data[2,]
+
+# 2nd - 5th mouse in the data
+mice_data[2:5,]
+```
+
+We can access a column in the data frame using `$` or `[, column_name]`.
+
+For example, let's take a look at what diets are contained in this data.frame. With `$Diet` we extract a character vector with entries specifying the diet for each mouse.
+```{r}
+diets <- mice_data$Diet
+class(diets)
+length(diets)
+```
+
+Again, printing out all values can again be messy for larger data.frames (e.g. imagine 20,000 genes), we can also just print the unique values to see which types of diets are available.
+```{r}
+unique(mice_data$Diet)
+```
+
+The function `table` can tell you how many entries you have for the two categories in the vector.
+```{r}
+table(mice_data$Diet)
+```
+
+# Data manipulation using dplyr
+The `dplyr` package provides a lot of convenient functions to work with data.frames in R, for example filtering and subsetting the data or summarising the data.
+
+Let's first install the package using `install.packages("dplyr")`.
+```{r}
+# install.packages("dplyr")
+```
+
+Once you have the package installed we can load it in our RSession using `library`.
+```{r, message = FALSE}
+library(dplyr)
+```
+
+Now we can use the functions provided in the dplyr package in our code.
+
+## Using filter and select
+For example, the function `filter` allows us to subset a data frame based on conditions that you can specify.
+
+If we want to only keep mise that are on the `chow` diet, we subset and filter the full data and create a new data frame containing only mice on the `chow` diet:
+```{r}
+chow_mice <- filter(mice_data, Diet=="chow") #keep only mice with chow diet
+```
+
+Again we can use `head()`, `nrow()` as above to take a look at the new data frame
+```{r}
+head(chow_mice)
+nrow(chow_mice)
+```
+
+
+With the function `select` we can select a specific column in the data frame
+```{r}
+chow_mice_weights <- select(chow_mice,Bodyweight)
+head(chow_mice_weights)
+class(chow_mice_weights)
+```
+Note that this is still a `data.frame` but now only containing a single column with the weight values.
+
+## Using the pipe %>%
+A nice feature of the `dplyr` package is that you can perform consecutive tasks by using what is called a "pipe". In `dplyr` we use `%>%` to denote a pipe. This symbol tells the program to first do one thing and then do something else to the result of the first. Hence, we can perform several data manipulations in one line. For example the same manipulations we did above can be combined like this:
+
+```{r}
+chow_mice_weights <- filter(chow_mice, Diet=="chow") %>% select(Bodyweight)
+```
+
+In the second task (`select`), we no longer have to specify the object we are editing since it is whatever comes from the previous call. 
+
+
+To calculate the average body weights of mouse on the chow diet we can use the function `mean`. Note that this function requires a vector as input and cannot be applied to a data.frame object. Therefore, we use `$` to extract a numeric vector from the data.frame and then use the `mean` function to calculate the mean. 
+```{r}
+mean(chow_mice_weights$Bodyweight)
+```
+
+You can also do all steps in one line using the pipe. 
+```{r}
+filter(chow_mice, Diet=="chow") %>% .$Bodyweight %>% mean()
+```
+
+## Other useful functions in dplyr
+Other important functions in the `dplyr` package are:
+
+- `mutate` allows you to add new variables that are defined based on existing variables
+- `rename` allows you to change the name of a variable
+- `arrange` allows you to change ordering of rows based on some value(s)
+- `summarise`: allow you to summarise values in the dataframe (see next exercise)
+- `group_by`: allows you to perform all dplyr functions by groups (see next exercise)
+
+For example, we cen add a new column defininf the bodyweights of mice in kg.
+```{r}
+mice_data_new <- mutate(mice_data, Bodyweight_in_kg = Bodyweight/1000)
+head(mice_data_new)
+```
+
+We can rename an existing column.
+```{r}
+mice_data_new_renamed <- rename(mice_data_new, Bodyweight_g = Bodyweight)
+head(mice_data_new_renamed)
+```
+
+And we can arrange the rows by Bodyweight to have the heaviest mice first.
+```{r}
+# lightest first
+mice_data_light_first<- arrange(mice_data, Bodyweight)
+head(mice_data_light_first)
+
+# heaviest first using -
+mice_data_heavy_first <- arrange(mice_data, -Bodyweight)
+# or desc()
+mice_data_heavy_first <- arrange(mice_data, desc(Bodyweight))
+
+head(mice_data_heavy_first)
+```
+
+# Summary
+Here, we have learnt
+
+* how to read data stored in `.csv` files into R using `read.csv()`
+* what a data.frame is and how to inspect its content
+* how to use dplyr for filtering and subsetting a data.frame
+* how to use dplyr for mutating values and arranging rows in a data.frame
+
+
+We end our analysis again with a `sessionInfo()` call for reproducibility and can knit the full analysis to create a report.
+```{r}
+sessionInfo()
+```
+

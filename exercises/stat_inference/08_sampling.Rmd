@@ -1,0 +1,75 @@
+---
+title: Statistical inference & sampling
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+Load the tidyverse package.
+```{r}
+# to be filled
+```
+
+# Importing the data into R
+We will again use the data of female mice weights to illustrate the concept of statistical inference and sampling. Read in the data again into an object called `mice_data`.
+```{r}
+# to be filled
+```
+
+# Sampling
+Let's assume the mice in the data are all mice in the population but we only have access to a smaller sample. For this we randomly sample 10 mice from the data. Run the following code:
+```{r}
+set.seed(1428)
+mice_data_sample <- mice_data[sample(1:nrow(mice_data), 10),]
+```
+Question: What does the `set.seed()` function do? What does the `sample()` function do?
+
+# Take a look at the sample
+Verify the number of mice in the sample is 10.
+```{r}
+# to be filled
+```
+
+# Comparing the sample to the full population
+Take a look at the distribution of weights across all mice in the sample. How does it compare to the distribution of all mice? Use for example boxplots or violinplots for the sample and full data as well as a qqplot to compare the two distributions.
+```{r}
+# to be filled
+```
+
+# Comparing diets in the sample
+What is the distribution of weights for mice on a chow vs. high-fat diet in the sample? Visualize this using e.g. boxplots or violinplots.
+```{r}
+# to be filled
+```
+
+# Obtaining summary statistics
+Use the `summary` function for the weights of the sample to obtain information on the minimal, maximal, average weight in the sample as well as quantiles and median. Then do the same separately for the mice on a hf and chow diet.
+```{r}
+# to be filled
+```
+
+# How would you answer the following questions based on this sample?
+
+* Do adult female mice always have a weight larger than 20g ?
+
+* Do adult female mice always have a weight larger than 15g ?
+
+* Does a chow diet lead to smaller body weights than a high fat diet?
+
+* Do mice on a high fat diet have on average min. 3g more body weight?
+
+* Would a mouse when changing her diet from chow to high-fat gain min. 3g?
+
+# Use a different random sample of mice
+
+Re-run the code in this file with the following seed: 4327923
+
+How does this change the results?
+
+```{r}
+sessionInfo()
+```
+
+
+
+

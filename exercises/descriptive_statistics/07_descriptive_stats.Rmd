@@ -1,0 +1,99 @@
+---
+title: Descriptive statistics - or how to summarise your data?
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+We again load the `tidyverse` package collection.
+```{r}
+# to be filled
+```
+
+# Importing the data into R
+We will again use the data of female mice weights for this exercise. Read in the file `femaleMiceWeights.csv` and save it in a variable called `mice_data`.
+```{r}
+# to be filled
+```
+
+Use `head` or `View` to recall how the data looks like.
+```{r}
+# to be filled
+```
+
+# Recap: Visualising the data
+
+What is the distribution of weights across all mice in the data set? Use an appropriate plot to show this.
+```{r}
+# to be filled
+```
+
+What is the distribution of weights for mice on a chow vs. high-fat diet in the data set?  Use an appropriate plot to compare them.
+```{r}
+# to be filled
+```
+
+# Obtaining summary statistics on the location of the sample distribution
+Use the `summary` function for the weights to obtain information on the minimal, maximal, average weight in the data as well as quantiles and median. Note: You can also calculate additional quantiles using the `quantile` function. Use this to calculate the 95% quantile in addition to the outpiut of the summary function.
+```{r}
+# to be filled
+```
+
+Is the median weight for mice in the chow or in the high fat diet larger? What do you expect from the boxplot above? Verify this by calculating the mean per diet group and compare. How about the mean weight?
+```{r}
+# to be filled
+```
+
+Calculate the summaries and 95% quantile for the weights of mice in each of the two diet groups.
+```{r}
+# to be filled
+```
+
+Note: Summarisation by categories in the data frame can also be conducted using dplyr's `summarize` function on a data frame grouped by the category of interest. Take a look at the following code and modify it to also include the minimum weight per diet group in the resulting data frame.
+```{r}
+mice_data %>%
+  group_by(Diet) %>%
+  summarise(mean_weight = mean(Bodyweight),
+            max_weight = max(Bodyweight)) %>%
+  ungroup()
+```
+
+# Obtaining summary statistics on the spread of the sample distribution
+
+Calculate the variance, standard deviation and mean absolute deviation of the weights. (Hint: Use `var`, `sd` and `mad`). 
+```{r}
+# to be filled
+```
+
+Is the variance for mice in the chow or in the high fat diet larger? What do you expect from the boxplot above? Verify this by calculating the variances per diet group and compare.
+```{r}
+# to be filled
+```
+
+# QQ-Plots
+Compare the distributions of mice in the two diet groups using a qqplot. (Hint: Take a look at the help of the function `qqplot` to see how to do this.). Once you generated the qqplot use the option `asp=1` in the function call. What does this change? Why would this make sense? Add a diagonal line using `abline(c(0,1))` to the plot to visualize where quantiles deviate. Note that this is a separate code line but has to be called jointly with the `qqplot` call.
+```{r}
+# to be filled
+```
+
+# Can you answer the following questions based on this data set?
+
+* Do adult female mice always have a weight larger than 20g ?
+
+* Do adult female mice always have a weight larger than 15g ?
+
+* Do adult female mice on a chow diet in general have smaller body weights than on a high fat diet?
+
+* Do adult female mice on a high fat diet have on average more than 3g more body weight?
+
+* Would an  adult female  mouse when changing her diet from chow to high-fat gain at least 3g?
+
+```{r}
+sessionInfo()
+```
+
+
+
+
+
+

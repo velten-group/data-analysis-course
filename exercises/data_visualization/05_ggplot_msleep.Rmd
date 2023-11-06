@@ -1,0 +1,233 @@
+---
+title: "First steps using ggplot for data visualization"
+author: "Britta Velten"
+date: "`r Sys.Date()`"
+output: html_document
+---   
+
+# Example: Mammalian sleep
+
+First we again read in our mammalian sleep data set as in the previous exercise. YOu again might need to adust your path to the file's location.
+```{r}
+msleep <- read.csv("msleep_ggplot2.csv") 
+```
+
+Now we use `ggplot2` to visualize the data. For this we first need to load the `ggplot2` library or the `tidyverse` collection that contains both `dplyr` and `ggplot2`.
+
+```{r, eval = FALSE}
+# install.packages("ggplot2") # If you have not yet installed ggplot2 or tidyverse
+```
+
+```{r, message=FALSE}
+# library(ggplot2)
+library(tidyverse) # this contains ggplot2
+```
+
+## Histograms
+Let's first visualize the total sleep across all mammals. A histogram can show the distribution of amount of sleep in the data.
+```{r}
+ggplot(msleep, aes(x=sleep_total)) +
+  geom_histogram()
+```
+
+We can customize the colors, theme, number of bins and axes labels.
+```{r}
+ggplot(msleep, aes(x=sleep_total)) +
+  geom_histogram(fill = "cornflowerblue", col= "black", bins = 10) +
+  theme_bw() + xlab("Total sleep (hours)") + ylab("# mammals")
+```
+*Question: How does the plot change if you use 100 or 3 bins? Which of the three plots would you pick to show your data?*
+
+Instead of number of bins we can also specify the width of a bin, e.g. bin within 5 hour windows of total sleep, or the exact intervals.
+```{r}
+ggplot(msleep, aes(x=sleep_total)) +
+  geom_histogram(fill = "cornflowerblue", col= "black", binwidth = 5) +
+  theme_bw()
+
+ggplot(msleep, aes(x=sleep_total)) +
+  geom_histogram(fill = "cornflowerblue", col= "black", breaks = c(0,5,10,15,20,25)) +
+  theme_bw()
+```
+
+*Question: Which of the above plots is more informative?*
+
+## Density plots
+Densities give a “smoothed” version of a histogram showing the distribution of the values.
+```{r}
+ggplot(msleep, aes(x=sleep_total)) +
+  geom_density() +
+  theme_bw()
+```
+
+Advanced: We can combine this with a histogram, where we modify the y-axis to show the density instead of number of mammals to have the same scale for histogram and density plot. The `alpha` parameter can be used to control the opacity of an element.
+```{r}
+ggplot(msleep, aes(x=sleep_total)) +
+  geom_histogram(aes(y = ..density..), fill = "cornflowerblue",
+                 alpha = 0.4) +
+  geom_density() +
+  theme_bw()
+```
+
+The amount of smoothing can also be controlled by the bandwidth parameter (determines the interval size over which to smooth). A larger bandwidth leads to high smoothing.
+```{r}
+ggplot(msleep, aes(x=sleep_total)) +
+  geom_histogram(aes(y = ..density..), fill = "cornflowerblue",
+                 binwidth = 10, alpha = 0.4) +
+  geom_density(bw = 10) +
+  theme_bw()
+```
+
+A smaller bandwidth leads to less smoothing.
+```{r}
+ggplot(msleep, aes(x=sleep_total)) +
+  geom_histogram(aes(y = ..density..), fill = "cornflowerblue",
+                 binwidth = 0.1, alpha = 0.4) +
+  geom_density(bw = 0.1) +
+  theme_bw()
+```
+*Question: What bandwidth would you use?*
+
+## Boxplots
+Boxplots provide a visualization of basic summary statistics of a numeric value incl. median, quantiles, outliers etc. You can add a boxplot to a ggplot using th `geom_boxplot` function.
+```{r}
+ggplot(msleep, aes(x = "mammals", y=sleep_total)) +
+  geom_boxplot(fill = "cornflowerblue") +
+  theme_bw()
+```
+
+Boxplots can be combined with a plot showing the density of the underlying data (violin plot)
+```{r}
+ggplot(msleep, aes(x = "mammals", y=sleep_total)) +
+  geom_violin() +
+  geom_boxplot(fill = "cornflowerblue", width = 0.5) +
+  theme_bw() + ylab("Sleep total (h)") + xlab("")
+```
+*Question: How would you change the colour of the boxplot? How would you change the color of the violin plot? Re-do the plot above with grey lines for the violin and a boxplot filled in `darkred`.*
+
+
+## Comparing across multiple categories
+To compare the amount of sleep across different mammalian orders we can split the plots by order using different colors for each mammalian order or separating them into different panels using the `facet_wrap` command (or both). Let's do this for three orders in the data by first subsetting the data and then using the subsetted data frame as input for ggplot. Note that we can also directly pipe the dataframe into ggplot using `%>%`. 
+```{r}
+# subset to three orders for simplicity
+msleep_top_orders <- msleep %>%
+  filter(order %in% c("Primates", "Carnivora", "Rodentia"))
+
+# histograms by order
+ggplot(msleep_top_orders, aes(x=sleep_total)) +
+  geom_histogram(aes(fill = order), col= "black", bins = 7) +
+  facet_wrap(~order) + 
+  theme_bw()
+
+# equivalent using the pipe to first subset and then plot
+msleep %>%
+  filter(order %in% c("Primates", "Carnivora", "Rodentia")) %>%
+  ggplot(aes(x=sleep_total)) +
+  geom_histogram(aes(fill = order), col= "black", bins = 7) +
+  facet_wrap(~order) + 
+  theme_bw()
+```
+*Question: What happens if you remove the `facet_wrap` above?*
+
+For boxplots and related plots we can also show different categories (e.g. mammlian orders) on the x-axis within a single panel.
+```{r} 
+# boxplots by order
+  ggplot(msleep_top_orders, aes(x = order, y=sleep_total)) + geom_violin() +
+  geom_boxplot(aes(fill = order), alpha = 0.4, width = 0.4) +
+  theme_bw() + geom_point()
+```
+*Question: What happens if you add a `facet_wrap` to the plot to separate mammalian orders into different panels?*
+
+*Question: Which is the outlying primate that sleeps much more?*
+
+## Scatterplot
+Now let's compare the total amount of sleep with the amount of REM sleep.
+```{r}
+ggplot(msleep, aes(x = sleep_total, y=sleep_rem)) +
+  geom_point()
+```
+
+We can also color the plot by order to compare this relationship for different orders. Here for 3 mammalian orders.
+```{r}
+msleep %>%
+  filter(order %in% c("Primates", "Carnivora", "Rodentia")) %>%
+  ggplot(aes(x = sleep_total, y=sleep_rem, col = order)) +
+  geom_point()
+```
+
+Using `coord_equal` we can enforce 1n aspect ratio of 1, i.e. 1 hour is represented by the same distance in the plot on the x and the y-axis. This can be useful if the same measures are used and we want a direct comparison.
+```{r}
+msleep %>%
+  filter(order %in% c("Primates", "Carnivora", "Rodentia")) %>%
+  ggplot(aes(x = sleep_total, y=sleep_rem, col = order)) +
+  geom_point() + coord_equal()
+```
+We can  specify a customized colour scheme to color different orders by. For this specify a named vector with colours for each mammalian order and add this to the plot using `scale_colour_manual(values = ..)`.
+```{r}
+my_colors <- c(Carnivora = "orange", Primates = "brown", Rodentia = "navy")
+
+msleep %>%
+  filter(order %in% c("Primates", "Carnivora", "Rodentia")) %>%
+  ggplot(aes(x = sleep_total, y=sleep_rem, col = order)) +
+  geom_point() + coord_equal() + scale_colour_manual(values = my_colors)
+```
+You can also save a ggplot object in a variable and later on print it or add something to it. For this we first generate a ggplot object and save it in a variable, here called `my_plot`.
+```{r}
+my_plot <- msleep %>%
+  filter(order %in% c("Primates", "Carnivora", "Rodentia")) %>%
+  ggplot(aes(x = sleep_total, y=sleep_rem, col = order)) +
+  geom_point() + coord_equal() + scale_colour_manual(values = my_colors)
+
+class(my_plot)
+```
+
+Now let's change the theme and print the plot:
+```{r}
+my_plot + theme_bw()
+```
+*Question: How much REM sleep do you expect a Primate with 12 hours of total sleep to have?*
+
+
+## Heatmap
+We can use ggplot to plot heatmaps, for example showing total and REM sleep. Here we do this for the first 10 mammals in the data. For this we need to bring the data into a "long format".
+```{r}
+msleep_long <- msleep %>% head(n=10) %>%
+  select(sleep_total, name, sleep_rem) %>%
+  pivot_longer(cols = -name, names_to = "sleep_type", values_to = "hours")
+
+head(msleep_long)
+
+ggplot(msleep_long, aes(x=sleep_type, y=name, fill = hours)) +
+  geom_tile()
+```
+
+*Question: What are the grey tiles?*
+
+Alternative packages are `pheatmap` or `ComplexHeatmap`. The functions `pheatmap` and `Heatmap` use a matrix as input and also perform clustering of the rows and columns in the heatmap (more later!).
+```{r}
+library(pheatmap)
+matrix_sleep <- msleep[,c("sleep_total", "sleep_rem")] %>% as.matrix()
+rownames(matrix_sleep) <- msleep$name
+pheatmap(matrix_sleep[1:10,])
+```
+*Question: Why is the colour scheme in the heatmap produced by pheatmap not ideal?*
+
+We can adjust the colours using the `color` argument to specify a different "color palette".
+```{r}
+library(RColorBrewer)
+pheatmap(matrix_sleep[1:10,],
+         color = brewer.pal(9, "Blues"))
+```
+*Question: Can you re-colour the heatmap in a different colour scheme? Which ones would make most sense?* See for example <https://r-graph-gallery.com/38-rcolorbrewers-palettes.html> for different options.
+
+Side note: A useful alternative package to `pheatmap` is `ComplexHeatmap`, which can provide you with some additional options over `pheatmap`.
+```{r}
+library(ComplexHeatmap)
+Heatmap(matrix_sleep[1:10,], name = "hours",
+        col = brewer.pal(9, "Blues"))
+```
+
+As always we end by a `sessionInfo` call and knit the document.
+```{r}
+sessionInfo()
+```
+
