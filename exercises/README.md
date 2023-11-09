@@ -1,5 +1,5 @@
 # Exercises
-Here you can find the exercises for the course. New exercises will be added throughout the course. To complete the exercise, download the `.Rmd` file by a right-click on the code link and open it in RStudio to edit the code and complete the tasks. Data that is required for some of the exercises can be found [here](../data/).
+Here you can find the exercises for the course. New exercises will be added throughout the course. To complete the exerise, download the `.Rmd` file by a right-click on the code link and open it in RStudio to edit the code and complete the tasks.
 
 
 ## Preparatory exercises
@@ -46,7 +46,7 @@ Here you can find the exercises for the course. New exercises will be added thro
 ## Clustering
 
 - Clustering iris data in R [16_clustering_iris.Rmd](clustering/16_clustering_iris.Rmd)
-- Clustering patients based on gene expression data (DIY)
+- Clustering patients based on gene expression data [17_clustering_CLL.Rmd](clustering/17_clustering_CLL.Rmd)
 
 ## Dimension reduction
 

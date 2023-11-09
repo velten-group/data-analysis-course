@@ -1,0 +1,111 @@
+---
+title: "Clustering on the CLL expression data"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+# Load and prepare the data
+Load the expression data from the MOFAdata package and subset to the patient samples with complete measurements.
+```{r}
+library(MOFAdata)
+data("CLL_data")
+data("CLL_covariates")
+
+# obtain RNA data for patients with complete RNA measurements
+mRNA <- CLL_data$mRNA # get mRNA data matrix from the CLL data list
+mRNA <- t(mRNA) # transpose matrix to have samples in rows
+has_no_mRNA <- apply(mRNA, 1, function(x) !any(is.na(x))) # find patient samples with complete mRNA information
+complete_patients <- names(has_no_mRNA)[has_no_mRNA]
+mRNA_complete <- mRNA[complete_patients,]
+
+# obtain information on Gender and IGHV status for those patients and collect them in a dataframe
+IGHV <- CLL_data$Mutations["IGHV", complete_patients]
+gender <- CLL_covariates[complete_patients, "Gender"]
+df_patinfo <- data.frame(patient_sample = complete_patients, 
+                         IGHV = IGHV,
+                         gender = gender)
+```
+
+
+# Cluster patients based on expression data
+
+## k-means
+1. Use k-means to cluster the patients into two groups based on their normalized expression values.
+```{r}
+# to be filled
+```
+
+2. How do the two clusters compare to the gender and IGHV status?
+
+2a. Use the `table` function with the vector of cluster labels and IGHV to compare.
+```{r}
+# to be filled
+```
+
+2b. Use the `table` function with the vector of cluster labels and gender to compare.
+```{r}
+# to be filled
+```
+
+
+## Hierarchical clustering
+3. Let's use hierarchical clustering to group the patients into two groups.
+
+3a. Calculate the euclidean distances between patients in the gene expression space using `dist` on the matrix containing mRNA measurements.
+```{r}
+# to be filled
+```
+
+3b. Use the `hclust` function on the distances object (created by `dist`) to obtain the clustering of patients.
+```{r}
+# to be filled
+```
+
+3c. Use `plot` on the output of 1b. to visualize the dendrogram.
+```{r}
+# to be filled
+```
+
+3d. Use the `cut` function on the output of 1b to create a vector containing clusters labels for the patients for 2 clusters.
+```{r}
+# to be filled
+```
+
+3e. Use the `table` command like in ex. 2a and 2b to compare the clusters to the groups defined by IGHV status and gender.
+```{r}
+# to be filled
+```
+
+## Heatmap
+4. A heatmap shows the expression values and sorts rows and columns using hierarchical clustering.
+
+4a. Plot a heatmap of the gene expression values starting from the `mRNA_complete` object using `pheatmap`.
+```{r}
+# to be filled
+```
+
+Optional (advanced): 
+4b. Annotate your heatmap by IGHV status and gender and the clusters found in exercises 2 and 3.
+```{r}
+# to be filled
+```
+
+4c. Vary the distance measure using `clustering_distance_rows` to use correlation distance instead of `euclidean`. When would this be useful?
+```{r}
+# to be filled
+```
+
+4d. Calculate a correlation matrix specifying the pairwise correlations of all patients. Use `pheatmap` to plot a heatmap of this correlation matrix and again annotate the patients by IGHV status, gender and clusters.
+```{r}
+# to be filled
+```
+
+```{r}
+sessionInfo()
+```
+
