@@ -51,4 +51,4 @@ Here you can find the exercises for the course. New exercises will be added thro
 ## Dimension reduction
 
 - PCA on the iris data in R [18_pca_iris.Rmd](dimension_reduction/18_pca_iris.Rmd)
-- Visualising patient samples expression data in a low-dimensional space (DIY)
+- Visualising patient samples expression data in a low-dimensional space [19_pca_CLL.Rmd](dimension_reduction/19_pca_CLL.Rmd)

@@ -1,0 +1,85 @@
+---
+title: "PCA on the CLL expression data"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+Load the expression data from the MOFAdata package and subset to the patient samples with complete measurements.
+```{r}
+library(MOFAdata)
+data("CLL_data")
+data("CLL_covariates")
+
+# obtain RNA data for patients with complete RNA measurements
+mRNA <- CLL_data$mRNA # get mRNA data matrix from the CLL data list
+mRNA <- t(mRNA) # transpose matrix to have samples in rows
+has_no_mRNA <- apply(mRNA, 1, function(x) !any(is.na(x))) # find patient samples with complete mRNA information
+complete_patients <- names(has_no_mRNA)[has_no_mRNA]
+mRNA_complete <- mRNA[complete_patients,]
+
+# obtain information on Gender and IGHV status for those patients and collect them in a dataframe
+IGHV <- CLL_data$Mutations["IGHV", complete_patients]
+trisomy12 <- CLL_data$Mutations["trisomy12", complete_patients]
+gender <- CLL_covariates[complete_patients, "Gender"]
+df_patinfo <- data.frame(patient_sample = complete_patients, 
+                         IGHV = as.factor(IGHV),
+                         gender = gender,
+                         trisomy12 = as.factor(trisomy12))
+```
+
+# PCA
+We install and load the ggfortify package.
+```{r}
+# to be filled
+```
+
+Use the `prcomp` function on the `mRNA_complete` object to calculate a PCA.
+```{r}
+# to be filled
+```
+
+Use the `autoplot` function on your results to plot the PCA for component 1 versus 2 as well as 3 versus 4. Color the plots first by Gender, then by IGHV and then by trisomy 12.  Use the `coord_fixed()` option for all plots.
+```{r}
+# to be filled
+```
+
+Look at the `rotation` matrix in the PCA object to find which genes contribute most to the first prinicipal component.
+```{r}
+# to be filled
+```
+
+Use the `summary` function on the PCA object to get information on the variance explained by each component
+```{r}
+# to be filled
+```
+
+Extract the variance explained and make an Elbow plot to determine a good numbr of PCs to keep.
+```{r}
+# to be filled
+```
+
+Cluster the patients into 3 groups using kmeans and make a PCA of the first two components colouring patients by the clusters.
+```{r}
+# to be filled
+```
+
+
+Optional: Plot a tSNE or a UMAP of the patients using `Rtsne` or `umap`.
+```{r}
+# to be filled
+```
+
+Optional: How does a PCA of the patient on the drug response data looks like? Are the clusters found on the expression data still visible? How does IGHV or tisomy12 relate to it?
+```{r}
+# to be filled
+```
+
+```{r}
+sessionInfo()
+```
+
