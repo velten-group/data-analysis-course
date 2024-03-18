@@ -1,5 +1,5 @@
 # Exercises
-Here you can find the exercises for the course. New exercises will be added throughout the course. To complete the exerise, download the `.Rmd` file by a right-click on the code link and open it in RStudio to edit the code and complete the tasks.
+Here you can find the exercises for the course. New exercises will be added throughout the course. To complete the exercise, download the `.Rmd` file by a right-click on the code link and open it in RStudio to edit the code and complete the tasks.
 
 
 ## Preparatory exercises
