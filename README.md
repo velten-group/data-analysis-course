@@ -2,17 +2,16 @@
 This repository contains the materials for the course on Data Analysis for Life Sciences taught at Heidelberg university for the DSCB major.
 
 ## Preparations
-1. Sign in to the Slack Workspace for this course
-2. Complete the pre-course survey by *Friday Oct 27*
-3. For the course you need to bring a laptop with the following installed:
-	- [R](https://cran.r-project.org/) - If you already have an existing installation of R, please make sure that your R version is 4.3.
+1. Join the Mattermost channel for this course
+2. For the course you need to bring a laptop with the following installed:
+	- [R](https://cran.r-project.org/) - If you already have an existing installation of R, please make sure that your R version is 4.5.
 	- [RStudio](https://posit.co/products/open-source/rstudio/)
   
 	If you have problems with the installation, take a look at [this video](https://www.youtube.com/watch?v=p8F_wreHTzw) on how to install R and RStudio.
 
-4. Once you have installed R and RStudio, please go to the [exercises](exercises/) page. There you will find two exercises to verify that everyone has a working R installation setup before the course and provides a recap on first steps in R. *Please take a look at both exercises before November 2 and hand in the output in via Slack (see details in the exercises)*
+3. Once you have installed R and RStudio, please go to the [exercises](exercises/) page. There you will find two exercises to verify that everyone has a working R installation setup before the course and provides a recap on first steps in R. *Please take a look at both exercises before November 2 and hand in the output in via Slack (see details in the exercises)*
 
-If you encounter any problems, get help via the Slack *#help* channel.
+If you encounter any problems, get help via the Mattermost channel.
 
 
 ## Literature
