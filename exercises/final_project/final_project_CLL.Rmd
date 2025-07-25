@@ -1,0 +1,96 @@
+---
+title: "On the use of expression data for diagnosis and treatment decisions in CLL"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Final exercise 
+
+As a homework exercise, discuss what clinical use expression data might have for diagnosis and treatment decisions in CLL patients. For this, create and submit a html report via Slack by Dec 15 that addresses the questions/tasks below and underlines them with plots and summary statistics of the data and include the code on how to generate these.
+
+Your report should have 3 parts:
+
+## Part 1: Provide an overview of the data (30 points)
+Provide someone who has never worked with the data a short overview on what is contained in the `CLL_data` object (ignoring the `Methylations` slot, which we have not discussed) and describe and visualize how gene expression values (as contained in the mRNA slot of the `CLL_data` object) are distributed across patients (using a small set of 3-5 genes as an example). 
+
+```{r}
+# if you had problems installing the MOFAdata package replace the three following lines by two load() statements  
+# to load the CLL_data.RData and CLL_covariates.RData objects as done in the exercises
+library(MOFAdata)
+data("CLL_data") 
+data("CLL_covariates")
+```
+
+## Part 2: Relate gene expression measurements to clinial markers and drug response (50 points)
+Discuss how the gene expression values could be used to support clinical decision making and diagnosis (e.g. for patient stratification into disease subgroups that relate to clinical markers such as IGHV or trisomy 12 as contained in the `Mutations` slot of the `CLL_data`) or for prediction of drug response as contained in the `Drugs` slot of the `CLL_data`). As a basis for this provide examples, summary statistics and/or plots using (at least) three of the following methods: clustering, t-test, multiple testing correction, linear models, correlation, PCA.
+
+*Notes on Part 2:* The task is quite broad and different approaches are possible (and expected from all of you!). Important will be that you are able to convince someone who is new to the data that gene expression contains valuable information based on the plots and outputs that you generate. Some questions you might want to consider here are:
+
+    - How does gene expression relate to the genomics markers, e.g. the IGHV status or trisomy 12 that are used as diagnostic marker in clinical care?
+    - Can expression data be used to predict the response to a drug?
+    - Can the expression data be used to stratify patients into two groups with differential reponses to some of the drugs (and for how many drug do you find differential reponses)?
+    (It is ok to discuss some of these questions with specific examples, e.g. a single gene and/or drug.)
+
+For your analysis only consider the patients that have both mRNA expression measurements and drug response measurements. Go back to the CLL exercise on linear models to recall how to subset the data to this set of patients.
+
+## Part 3: Make a treatment decision for a new patient
+
+Which of the following 5 drugs would you give to the patient if the only criterion was to kill as many tumor cells in a patient sample as possible (i.e., having an as low as possible values in the drug response measurements): "D_001_4", "D_002_4", "D_003_4", "D_021_4", "D_043_4"?
+
+### Making decisions for patients without drug response measurements (advanced) (20 points)
+For this copy the following code in your report. This code will select a patient for you that you should consider in this task. This patient has no drug response measurements in the original data. Suggest *two approaches* how you could determine the best drug for this patient and discuss which one you would prefer and what could be limitations of your approach.
+```{r}
+# if you had problems installing the MOFAdata package replace the three following lines by two load() statements  
+# to load the CLL_data.RData and CLL_covariates.RData objects as done in the exercises
+library(MOFAdata)
+data("CLL_data") 
+data("CLL_covariates")
+
+# code to select a patient for task 3 (advanced version)
+set.seed(DDMMYYYY) # change the DDMMYYYY in this line to your birthday
+pats_withRNA_no_drugs <- apply(CLL_data$Drugs,2, function(x) all(is.na(x))) & apply(CLL_data$mRNA,2, function(x) !any(is.na(x)))
+pats_withRNA_no_drugs <- names(pats_withRNA_no_drugs)[pats_withRNA_no_drugs]
+patient_to_consider <- sample(pats_withRNA_no_drugs, 1)
+print(patient_to_consider)
+```
+
+*Notes on Part 3 - advanced:* We have not covered any method that will directly predict the best drug for you. This task is about coming up with approaches how you could use some of the methods we have learnt to find a good drug. Anything that you would expect to be a better choice than simply choosing a drug at random is ok here. 
+
+### Making decisions for patients with drug response measurements (5 points)
+Make a treatment decision for the patient selected in the following code chunk, for which drug response measurements are available. Here you can directly compare the 5 drug response values to identify the best of the 5 drugs with lowest response values.
+```{r}
+# if you had problems installing the MOFAdata package replace the three following lines by two load() statements  
+# to load the CLL_data.RData and CLL_covariates.RData objects as done in the exercises
+library(MOFAdata)
+data("CLL_data") 
+data("CLL_covariates")
+
+# code to select a patient for task 3 (easier version)
+set.seed(DDMMYYYY) # change the DDMMYYYY in this line to your birthday
+pats_with_drugs <- apply(CLL_data$Drugs,2, function(x) !any(is.na(x)))
+pats_with_drugs <- names(pats_with_drugs)[pats_with_drugs]
+patient_to_consider <- sample(pats_with_drugs, 1)
+print(patient_to_consider)
+```
+
+
+*Hint 1*: Things you might want to consider for the advanced version of this part are differences in (e.g. average) drug responses across the different drugs, similarity of this patient to other patients that have drug response measurements, linear models using a subset of genes to predict drug response etc.
+ 
+*Hint 2*: You can use the following code to get information about the patient you want to make predictions for:
+```{r}
+mRNA_vector <- CLL_data$mRNA[,patient_to_consider] # expression values for this patient
+IGHV <-CLL_data$Mutations["IGHV",patient_to_consider] # IGHV status for this patient
+tr12 <- CLL_data$Mutations["trisomy12",patient_to_consider] # trisomy12 indicator for this patient
+pat_info <- CLL_covariates[patient_to_consider,] # gender and diagnosis for this patient
+drug_vector <- CLL_data$Drugs[,patient_to_consider] # expression values for this patient
+```
+
+
+## Some general notes
+
+* *Important: Explain each step of your analysis and interpret the results. Do not just hand in a report containing code chunks, R output and plots but describe in detail which conclusions you would draw from a given analysis and what potential limitations might be.*
+* Individual help will not be provided via Slack. If you are unclear on what a task is about or have problems with getting the data into a suitable format, you can ask via the #help channel so that everyone can see the responses. Other questions on specific approaches will not be answered for fairness.
+* The questions are quite broad very different solutions will be possible (and are expected from all of you)
+* Make sure to hand in a clean and concise report that only contains the output and plots that you need to convince someone on the arguments you make
+

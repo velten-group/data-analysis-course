@@ -1,0 +1,190 @@
+---
+title: "Using ggplot for data visualization"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+0. Load the tidyverse collection of libraries that includes ggplot2 and dplyr.
+```{r}
+# to be filled
+```
+
+For these exercises, we will use a new dataset that is contained in the Bioconductor MOFAdata package. The data contains different molecular read-outs on a set of patient samples. Install the package and run the following code.
+```{r}
+library(MOFAdata)
+data("CLL_data")
+data("CLL_covariates")
+CLL_covariates <- rownames_to_column(CLL_covariates, "patient_sample")
+```
+
+
+1. What data type is `CLL_data`? 
+
+1a. Use `class()` to find out!
+```{r}
+# to be filled
+```
+
+1b. Use `names` and `str` on the `CLL_data` object to get more information on what it contains.
+```{r}
+# to be filled
+```
+
+
+2. Extract the `mRNA` data from the `CLL_data` object and create a new object called `mRNA` from it. What data type is `mRNA`?
+ 
+```{r}
+# to be filled
+```
+
+3. The mRNA object contains gene expression information on genes (ENSGXXXXXX) and different patient samples (H0XX). 
+
+3a. How many patients and genes are in the data, what do the rows in the data correspond to and what the columns?
+```{r}
+# to be filled
+```
+
+3b. Are there any missing values in the data (hint: use `is.na` to check if an entry is missng. You can use `any()` on a logical vector or matrix to find out if at least one value is `TRUE`, similarly `all()` tells you if all values are `TRUE`)?
+```{r}
+# to be filled
+```
+
+3c. Use `t()` on the `mRNA` object and save the results as the new `mRNA` object (overwriting the old one) to flip rows and columns.
+```{r}
+# to be filled
+```
+
+4. We will first get rid of patient samples without gene expression measurements. 
+
+4a. For this we run the following code. What is done here? The `apply`, `sapply` and `lapply` functions are very useful alternatives to loops and we will use them repeatedly in this course. Take a look at [this tutorial](https://www.datacamp.com/community/tutorials/r-tutorial-apply-family))* for explanations on them.
+```{r}
+has_no_mRNA <- apply(mRNA, 1, function(x) all(is.na(x)))
+sum(has_no_mRNA)
+mRNA_complete <- mRNA[!has_no_mRNA,]
+```
+
+4b. How many patient samples are left after this step in the `mRNA_complete` object? How many genes are left? 
+```{r}
+# to be filled
+```
+
+4c. Did we get rid of all missing values in the data? 
+```{r}
+# to be filled
+```
+
+4d. When would you expect the above filtering step to not remove all missing values?
+```{r}
+# to be filled
+```
+
+5. To use ggplot2 we will re-format the data to a long data.frame with 3 columns containing the patient sample, the gene and the expression value and add information on the gender and diagnosis of each patient as well as on a clinical genomic marker called IGHV status. 
+
+5a. For this run the following code and try to understand what is done in each step. Make use of the help for function that you don't know yet.
+```{r}
+mRNA_df <- mRNA_complete %>% as.data.frame() %>%
+  rownames_to_column(var = "patient_sample") %>%
+  pivot_longer(-patient_sample, names_to = "gene", values_to = "gene_expression") %>%
+  as.data.frame()
+
+# add information on Gender and Diagnosis
+mRNA_df <- left_join(mRNA_df, CLL_covariates, by = "patient_sample")
+
+# add information on IGHV
+ighv <- as.data.frame(t(CLL_data$Mutations)) %>%
+  select("IGHV") %>%
+  mutate(IGHV = as.factor(IGHV)) %>%
+  rownames_to_column("patient_sample")
+mRNA_df <- left_join(mRNA_df, ighv, by = "patient_sample")
+```
+
+
+5b. Now use the `head` function to take a look at the resulting data frame `mRNA_df`.
+```{r}
+# to be filled
+```
+
+6. What is the range of expression values for the gene LPL (ENSG00000175445)? 
+
+6a. Filter the data.frame for the gene LPL (ENSG00000175445) and plot a histogram of its expression values across all patients using ggplot.
+```{r}
+# to be filled
+```
+
+6b. Modify the colors and axes labels of the plot. 
+```{r}
+# to be filled
+```
+
+6c. Use `facet_wrap` to generate separate plots for patients with different IGHV status.
+```{r}
+# to be filled
+```
+
+7. Let's look at the expression for multiple genes.
+
+7a. Select 5 genes of your choice from the data (hint: Use `unique` on the `gene` column to recall which genes are in the data).
+```{r}
+# to be filled
+```
+
+7b. Now filter the `mRNA_df` object to only contain those 5 genes (hint: you can use `%in%` in the filter command to set the condition that the value of the `gene` column needs to be contained in a vector of the 5 gene names)
+```{r}
+# to be filled
+```
+
+7c. Make a boxplot for the expression values of five selected genes in the data. 
+```{r}
+# to be filled
+```
+
+7d. Compare the boxplots to histograms for the same 5 genes (hint: use facet_wrap to separate the histograms for the 5 genes into separate panels).
+```{r}
+# to be filled
+```
+
+
+8. Let's look at how the values of two genes relate to one another, taking LPL (ENSG00000175445) and PPP1R9A (ENSG00000158528) as example.
+
+8a. For this you select these two genes and bring the data into a wide format with each column containing measurements for one gene. Take a look at the following code and run it.
+```{r}
+mRNA_wide <- filter(mRNA_df, gene %in% c("ENSG00000175445", "ENSG00000158528")) %>%
+  pivot_wider(names_from = "gene", values_from = "gene_expression",
+              id_cols = c("patient_sample", "Gender", "Diagnosis", "IGHV"))
+head(mRNA_wide)
+```
+
+8b. Use the object created in the last step to plot the scatterplot of the two genes. Then color by gender and IGHV status of the patient. What do the plots tell you about the relation of the two genes?
+```{r}
+# to be filled
+```
+
+
+9. Last, we want to plot a heatmap of the expression across genes and patients. 
+
+9a. For this, install and load the `pheatmap` library. (Note: ComplexHeatmap would be an alternative)
+```{r}
+# to be filled
+```
+
+9b. To create the heatmap of the expression data we start from the `mRNA_complete` object (remember: pheatmap uses a matrix as input). Verify that `mRNA_complete` is a matrix and subset it to the first 30 genes in the matrix. 
+```{r}
+# to be filled
+```
+
+9c. Use the `pheatmap` function to plot the heatmap of gene expression values for the first 30 genes. How do you interpret this heatmap?
+```{r}
+# to be filled
+```
+
+9d. (advanced) Can you use the `annotation_row` argument of pheatmap to label the patient samples by Gender, IGHV and Diagnosis as provided in `mRNA_df`? Hint: Extract the relevant columns from the `mRNA_df`, subset to only distinct rows (using `distinct`) to generate the input for `annotation_row`. The data.frame used for `annotation_row` needs to have rownames matching the rownames in mRNA expression matrix. Set these using the `rownames` function. 
+```{r}
+# to be filled
+```
+
+10. Call the function `sessionInfo()` to have an output of your R and package versions and operating system. This is good practice to always include so that other people can reproduce your code.
+```{r}
+# to be filled
+```
+

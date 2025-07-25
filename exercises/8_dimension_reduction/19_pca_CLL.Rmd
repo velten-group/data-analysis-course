@@ -1,0 +1,104 @@
+---
+title: "PCA on the CLL expression data"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Preparations
+
+0a. Load the following package.
+```{r}
+library(tidyverse)
+```
+
+0b. Install and load the ggfortify package.
+```{r}
+# to be filled
+```
+
+# Load and subset the data
+
+1a. Load the expression data from the MOFAdata package and subset to the patient samples with complete measurements by running the following code and inspect its output.
+```{r}
+library(MOFAdata)
+data("CLL_data")
+data("CLL_covariates")
+
+# obtain RNA data for patients with complete RNA measurements
+mRNA <- CLL_data$mRNA # get mRNA data matrix from the CLL data list
+mRNA <- t(mRNA) # transpose matrix to have samples in rows
+has_no_mRNA <- apply(mRNA, 1, function(x) !any(is.na(x))) # find patient samples with complete mRNA information
+complete_patients <- names(has_no_mRNA)[has_no_mRNA]
+mRNA_complete <- mRNA[complete_patients,]
+
+# obtain information on Gender and IGHV status for those patients and collect them in a dataframe
+IGHV <- CLL_data$Mutations["IGHV", complete_patients]
+trisomy12 <- CLL_data$Mutations["trisomy12", complete_patients]
+gender <- CLL_covariates[complete_patients, "Gender"]
+df_patinfo <- data.frame(patient_sample = complete_patients, 
+                         IGHV = as.factor(IGHV),
+                         gender = gender,
+                         trisomy12 = as.factor(trisomy12))
+```
+
+1b. How many samples and features are in the `mRNA_complete` object?
+
+# PCA
+2 Let's calculate the PCA for the gene expression measurments.
+2a. Use the `prcomp` function on the `mRNA_complete` object to calculate a PCA.
+```{r}
+# to be filled
+```
+
+2b. Use the `autoplot` function on your results to plot the PCA for component 1 versus 2 as well as 3 versus 4. Use the `coord_fixed()` option for all plots (what does it do?). 
+```{r}
+# to be filled
+```
+
+2c. Color the plots from 2b first by Gender, then by IGHV and then by trisomy 12.  
+```{r}
+# to be filled
+```
+
+2d. Look at the `rotation` matrix in the PCA object to find which genes contribute most to the first prinicipal component.
+```{r}
+# to be filled
+```
+
+2e. Use the `summary` function on the PCA object to get information on the variance explained by each component
+```{r}
+# to be filled
+```
+
+2f. Extract the variance explained and make an Elbow plot to determine a good number of PCs to keep.
+```{r}
+# to be filled
+```
+
+# Visualize clusters in the PCA plot
+3a. Cluster the patients into 3 groups using kmeans.
+3b. Make a PCA plot of the first two components colouring patients by the clusters.
+```{r}
+# to be filled
+```
+
+# Non-linear dimension reduction methods (optional, advanced)
+4. Plot a tSNE or a UMAP of the patients' expression data using `Rtsne` or `umap`.
+```{r}
+# to be filled
+```
+
+# PCA on other omic layers
+5. Optional: Compare the structure between patient samples that you found in the PCA plot from gene expression data to the structure in the drug response data.
+5a. How does a PCA of the patient on the drug response data looks like? 
+5b. Are the clusters found on the expression data still visible? 
+5c. How does IGHV or tisomy12 relate to it?
+```{r}
+# to be filled
+```
+
+```{r}
+sessionInfo()
+```
+

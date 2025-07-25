@@ -11,7 +11,7 @@ This file recapitulates the first steps of R programming. If you are completely 
 * Chapter 1-3 of Rafael A. Irizarry's [*Introduction to Data Science*](http://rafalab.dfci.harvard.edu/dsbook/introduction.html)
 * [Babraham R Course](https://www.bioinformatics.babraham.ac.uk/training/Introduction_to_R/Introduction%20to%20R%20course%20booklet.pdf)
 
-<mark>**Your task**: Please generate a html version of this file (following the steps described below) and *hand this in by November 2 via Slack*.</mark>
+<mark>**Your task**: Please generate a html version of this file (following the steps described below) and *hand this in via Mattermost*.</mark>
 
 Don't worry if you encounter problems, we will jointly go through the file on the first day of the course.
 
@@ -339,6 +339,7 @@ if(hungry) {
 
 ### Installing packages
 
+#### CRAN
 Many useful functions are not available in base R but are provided by tailored packages. For example, `ggplot2` is a useful  package, which we will make use of in the course for plotting and data visualization. New packages can be installed as follows:
 ```{r, eval = FALSE}
 if(!"ggplot2" %in% installed.packages()) # only installs the package if not yet available, "!" meant "not" in R language
@@ -353,17 +354,33 @@ library(ggplot2)
 qplot(x = 1:10, y = log(1:10))
 ```
 
-<mark>**Task 8: Install the following package: `tidyverse`. This is a collection of packages useful for data handling and visualization.**</mark>
+<mark>**Task 8: Install the following packages: `tidyverse`, `pheatmap`. This is a collection of packages useful for data handling and visualization.**</mark>
+
+#### Bioconductor
+Some packages are not in the standard R repository (CRAN) but on [Bioconductor](https://www.bioconductor.org/).
+
+<mark>**Task 9:  Follow the instruction [here](https://www.bioconductor.org/install/) to install BiocManager and be able to install packages from Bioconductor. Then try to run the following code to install a package called MOFAdata and ComplexHeatmap**</mark>. If you work on Windows you might need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/) first to be able to install these pacakges. 
+```{r, eval = FALSE}
+BiocManager::install("MOFAdata")
+BiocManager::install("ComplexHeatmap")
+```
+
+Again you can use those packages now using `library` to load its content.
+```{r}
+library(MOFAdata)
+library(ComplexHeatmap)
+```
+
 
 ### Cheat Sheet
 An overview over important functions, data types and data structures in R is summarized in this [cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf). 
 
-<mark>**Task 9: Take a look and save it for later use.** </mark>
+<mark>**Task 10: Take a look at the cheat sheet and save it for later use.** </mark>
 
 ### Final notes
 At the end of each Rmd file it is useful to print the output of the `sessionInfo()` function. This is important for reproducibility as it helps you and others to go back to a html report, which you did in the past and see which operating system, R version and package versions you used.
 
-<mark>**Task 10: Knit the .Rmd file with all your changes and solutions by clicking on the "Knit button" for the tasks and send the html to Britta Velten via Slack. Make sure to change the author name to your name before knitting. Don't worry if you encounter problems, we will jointly go through the file on the first day of the course ** </mark>
+<mark>**Task 11: Knit the .Rmd file with all your changes and solutions by clicking on the "Knit button" for the tasks and send the html to Britta Velten via Mattermost. Make sure to change the author name to your name before knitting. Don't worry if you encounter problems, we will jointly go through the file on the first day of the course ** </mark>
 
 Optional tasks: 
 

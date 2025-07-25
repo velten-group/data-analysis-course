@@ -10,12 +10,12 @@ output: html_document
 # to be filled
 ```
 
-1. Install and load the following package: `remotes`. Then run the following R code in the console `remotes::install_github("ngay/kustats")`. 
+1a. Install and load the following package: `remotes`. Then run the following R code in the console `remotes::install_github("ngay/kustats")`. 
 ```{r, eval = FALSE}
 # to be filled
 ```
 
-Now you can load and use the `kustats` R package which contains some useful data sets.
+1b. Now you can load and use the `kustats` R package which contains some useful data sets.
 ```{r}
 # to be filled
 ```

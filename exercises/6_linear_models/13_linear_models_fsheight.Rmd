@@ -1,0 +1,80 @@
+---
+title: "Using linear regression to predict heights"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+## Load relevant libraries
+0. We will use the tidyverse and UsingR packge. Load these libraries here (and install them if needed).
+```{r}
+# to be filled
+```
+
+## Load and inspect the data
+1. The UsingR package contains data on father's height and his son's height. Use `?father.son` to find our more and `head(father.son)` to take a first glimpse at the data.
+```{r}
+# to be filled
+```
+
+2a. Draw a scatterplot of the height of father (x-axis) versus son (y-axis). 
+```{r}
+# to be filled
+```
+
+2b. Calculate the Pearson correlation of the two variables.
+```{r}
+# to be filled
+```
+
+2c. Would you expect a very different result when using Spearmans' correlation? Verify this.
+```{r}
+# to be filled
+```
+
+## Fitting a linear model
+3. Now we aim to describe this relationship by a line. To learn the intercept and slope of the data we can use the `lm` function.
+
+3a. Call `lm` to predict the height of a son by the height of his father using a linear model
+```{r}
+# to be filled
+```
+
+3b. Call the `summary` function on the result of the last task. How do you interpret the results?
+```{r}
+# to be filled
+```
+
+3c. Let's add the fitted line to our plot of 2a using `geom_abline` with the learnt slope and intercept.
+```{r}
+# to be filled
+```
+
+## Making predictions
+4. We can now make a prediction for a son of a 75in-tall father. 
+4a. Create a new data.frame containing the father height for which you want to make predictions. Note the column name must match the ones from the original data frame (father.son). 
+```{r}
+# to be filled
+```
+
+4b. Then use the `predict` function with the new data (as `newdata` argument) and the output of the `lm` call from exercie 3a to make a prediction of the son's height. 
+```{r}
+# to be filled
+```
+
+4c. Add the point for the predictions from the last exercise 4b to the scatter plot from 3c.
+```{r}
+# to be filled
+```
+
+## Advanced exercises
+5. (optional) Use `plot` on the object created by the `lm` function. How can you use the output to check if your model is an appropriate model?
+```{r}
+# to be filled
+```
+
+## sessionInfo
+```{r}
+sessionInfo()
+```
+

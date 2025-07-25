@@ -34,12 +34,18 @@ What is the distribution of weights for mice on a chow vs. high-fat diet in the 
 ```
 
 # Obtaining summary statistics on the location of the sample distribution
-Use the `summary` function for the weights to obtain information on the minimal, maximal, average weight in the data as well as quantiles and median. Note: You can also calculate additional quantiles using the `quantile` function. Use this to calculate the 95% quantile in addition to the outpiut of the summary function.
+
+First substract the weights from the dataframe as a vector.
 ```{r}
 # to be filled
 ```
 
-Is the median weight for mice in the chow or in the high fat diet larger? What do you expect from the boxplot above? Verify this by calculating the mean per diet group and compare. How about the mean weight?
+Use the `summary` function for the weights to obtain information on the minimal, maximal, average weight in the data as well as quantiles and median. Note: You can also calculate additional quantiles using the `quantile` function. Use this to calculate the 95% quantile in addition to the output of the summary function.
+```{r}
+# to be filled
+```
+
+Is the median weight for mice in the chow or in the high fat diet larger? What do you expect from the boxplot above? Verify this by calculating the median per diet group and compare. How about the mean weight?
 ```{r}
 # to be filled
 ```
@@ -71,7 +77,17 @@ Is the variance for mice in the chow or in the high fat diet larger? What do you
 ```
 
 # QQ-Plots
-Compare the distributions of mice in the two diet groups using a qqplot. (Hint: Take a look at the help of the function `qqplot` to see how to do this.). Once you generated the qqplot use the option `asp=1` in the function call. What does this change? Why would this make sense? Add a diagonal line using `abline(c(0,1))` to the plot to visualize where quantiles deviate. Note that this is a separate code line but has to be called jointly with the `qqplot` call.
+Compare the distributions of mice in the two diet groups using a qqplot. (Hint: Take a look at the help of the function `qqplot` to see how to do this.). 
+```{r}
+# to be filled
+```
+
+Once you generated the qqplot use the option `asp=1` in the function call. What does this change? Why would this make sense?
+```{r}
+# to be filled
+```
+
+Add a diagonal line using `abline(c(0,1))` to the plot to visualize where quantiles deviate. Note that this is a separate code line but has to be called jointly with the `qqplot` call.
 ```{r}
 # to be filled
 ```

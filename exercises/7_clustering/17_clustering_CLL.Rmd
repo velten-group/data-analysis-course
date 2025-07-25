@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
+# Preparations
 ```{r}
 library(tidyverse)
 ```
@@ -56,7 +57,7 @@ df_patinfo <- data.frame(patient_sample = complete_patients,
 ## Hierarchical clustering
 3. Let's use hierarchical clustering to group the patients into two groups.
 
-3a. Calculate the euclidean distances between patients in the gene expression space using `dist` on the matrix containing mRNA measurements.
+3a. Calculate the Euclidean distances between patients in the gene expression space using `dist` on the matrix containing mRNA measurements.
 ```{r}
 # to be filled
 ```
@@ -71,7 +72,7 @@ df_patinfo <- data.frame(patient_sample = complete_patients,
 # to be filled
 ```
 
-3d. Use the `cut` function on the output of 1b to create a vector containing clusters labels for the patients for 2 clusters.
+3d. Use the `cut` function on the output of 3b to create a vector containing clusters labels for the patients for 2 clusters.
 ```{r}
 # to be filled
 ```

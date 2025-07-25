@@ -7,9 +7,9 @@ output: html_document
 
 # Example: Mammalian sleep
 
-First we again read in our mammalian sleep data set as in the previous exercise. YOu again might need to adust your path to the file's location.
+First we again read in our mammalian sleep data set as in the previous exercise. You again might need to adjust your path to the file's location.
 ```{r}
-msleep <- read.csv("msleep_ggplot2.csv") 
+msleep <- read.csv("../../data/msleep_ggplot2.csv") 
 ```
 
 Now we use `ggplot2` to visualize the data. For this we first need to load the `ggplot2` library or the `tidyverse` collection that contains both `dplyr` and `ggplot2`.

@@ -1,0 +1,192 @@
+---
+title: "Predicting drug response on the CLL data"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Aim of this exercise
+For this exercise we will use two data sets from the CLL data, containing different molecular measurements from chronic lymphocytic leukemia patient samples. We will make use of:
+
+- gene expression data `mRNA` slot: This data contains normalized gene expression measurements for 5,000 genes
+
+- drug response data: `drugs` slot: The drug response data measures what fraction of tumor cells in a sample remain "alive" after drug treatment. Values close to 0 indicate that the drug killed almost all cells (effective drug treatment), values close to 1 that cells are not affected by the drug  the treatment is not effective on the sample).
+
+- additional patient information on the Gender and the so-called IGHV status (clinical marker used for diagnosis and patient stratification) of the patient.
+
+*Aim:* Dind out whether we can use gene expression data to predict the response to a given drug called ibrutinib (D_002). For this we will only consider patient samples with both mRNA and drug measurements. 
+
+# Preparations
+Let's first load the tidyverse package.
+```{r}
+library(tidyverse)
+```
+
+# Data preparations
+1. Run the following code to generate a matrix of expression values and a vector for the drug response for this set of patients. What does the code do?
+```{r}
+library(MOFAdata)
+data("CLL_data")
+data("CLL_covariates")
+
+has_mRNA <- apply(CLL_data$mRNA, 2, function(x) !all(is.na(x)))
+has_drug <- apply(CLL_data$Drugs, 2, function(x) !all(is.na(x)))
+stopifnot(names(has_drug) == names(has_mRNA))
+sample_complete <- has_mRNA & has_drug
+sample_names_complete <- names(sample_complete)[sample_complete]
+
+# subset mRNA
+mRNA <- t(CLL_data$mRNA)[sample_names_complete,]
+
+# subset drugs data
+ibrutinib_response <- t(CLL_data$Drugs)[sample_names_complete, "D_002_2"] #_2 indicates a specific drug concentration
+
+# subset covariates and add mutation information
+covariates <- CLL_covariates[sample_names_complete,]
+covariates$IGHV <- as.factor(CLL_data$Mutations["IGHV",sample_names_complete])
+```
+
+2. Inspect the resulting objects (`covariates`, `mRNA` and `ibrutinib_response`)
+2a. Verify that the `covariates`, `mRNA` and `ibrutinib_response` objects all have the same number of samples.  How many samples are we left with? 
+2b. What classes are the three objects? 
+2c. Do they still contain missing values?
+```{r}
+# to be filled
+```
+
+
+# Visualizing the relationship of gene expression and drug response
+3. Before learning a linear model to predict drug response we first visualize the data.
+3a. Select a gene of your choice and make a scatterplot of its expression versus response to ibrutinib. 
+3b. What is the correlation of the two variables?
+3c. Would you expect the gene to be a good predictor of the drug response?
+*Note on exercise 3*: First create a data.frame that contains the gene expression values for your gene of choice, the drug response values and sample names and (optionally) other information that might be useful such as IGHV status and Gender of the patient sample.
+```{r}
+# to be filled
+```
+
+# Fitting a linear model to predict drug response
+
+4. Next we want to predict the dug response using the expression of your selected gene.
+4a. Use the `lm` function to fit a linear model that can predict the ibrutinib response using the gene's expression value. 
+4b. Is the expression of the gene a good predictor? 
+```{r}
+# to be filled
+```
+
+4c. Use your results of the linear model fit from 4a to add a line to the scatterplot of exercise 3a. that best fits your data using `geom_abline` with the arguments `slope` and `intercept` to specify the slope and intercept of the line.
+```{r}
+# to be filled
+```
+
+4d. (optional) Compare this to a plot you would get by using `stat_smooth(method = "lm", se = FALSE)`.
+```{r}
+# to be filled
+```
+
+# Using INSM1 to predict Ibrutinib response
+In the following we ask you to consider one specific gene: ENSG00000173404 (INSM1) instead of your previously selected gene. Repeat the analysis steps above to answer the following questions:
+5a. Is the expression of this gene a good predictor of Ibrutinib? 
+5b. Do patients with a high expression of INSM1 respond better to the drug (values closer to 0)?  
+```{r}
+# to be filled
+```
+
+# Using all genes to predict Ibrutinib response 
+6. (optional, advanced): Repeat the linear model fitting for all genes. How many genes do you find that are significant predictors of the drug response at a FDR of 5%?
+```{r}
+# to be filled
+```
+
+# Adding additional covariates to the model
+7a. Add Gender and IGHV status information as additional covariates to gene expression of ENSG00000173404 (INSM1) into the model from exercise 5 to predict response to ibrutinib.  
+7b. Are they informative? 
+7c. Does the p-value and coefficient for the gene expression change when including additional these covariates?
+```{r}
+# to be filled
+```
+
+7d. (optional, advanced): Repeat ex 7a for all genes. How many genes do you find that are significant predictors of the drug response at a FDR of 5% when including IGHV status and Gender in the model? Compare this to the results from ex. 6, how do you interpret this?
+```{r}
+# to be filled
+```
+
+
+# Making predictions
+
+8. How would you predict the response to Ibrutinib for the patients "H024" and "H114" based on their expression data for the gene ENSG00000173404 alone and based on expression of ENSG00000173404, IGHV and Gender information?
+
+8a. Use the predict function and the models from 5a and 7a to make predictions.
+```{r}
+# to be filled
+```
+
+8b. Would you expect them to respond well to Ibrutinib compared to other patients? (Remember values close to 1 mean cells are not much affected by the drug, i.e. bad response, the drug is not killing the tumor cells).
+
+*Hint for exercise 8*: These two patients are not part of the objects created at the beginning of this file because they do not have drug response measurments. Therefore go back to the full data as contained in `CLL_data` and extract the two patients' gene expression from the `CLL_data$mRNA`, IGHV status from `CLL_data$Mutations` and Gender from `CLL_covariates` and collect them in a new data.frame. Note that this data.frame should have the same column names as in the data.frame used for fitting to be able to directly use the `predict` function on it. 
+
+
+
+# Related topics (optional, very advanced)
+
+In the next few exercises we will touch upon some topics that we did not cover in the course. Feel free to take a look and try to understand what is done there and how this compares to a vanilla linear model.
+
+## Predicting IGHV status
+9. Can you predict IGHV status based on the expression of ENSG00000173404 (INSM1)? 
+9a. For this, take a look at the expression of the gene in the following patients: "H064", "H256"? How is their expression of ENSG00000173404 compared to other patients with mutated or unmutated IGHV status? What would you predict?
+```{r}
+# to be filled
+```
+
+9b. Is a linear model a good model for the task of predicting IGHV from ENSG00000173404 expression? 
+```{r}
+# to be filled
+```
+
+9c. Take a look at the help of the `glm` function. What does it do? The function has the same syntax as`lm`. 
+
+9d. Use it with the argument `family = `binomial` to fit a generalised linear model for predicting IGHV status based on the gene's expression. Is the gene expression a significant predictor? More information on generalised linear models and logistic regression can be found, e.g. in Chapter 4.3 of https://www.statlearning.com/.
+```{r}
+# to be filled
+```
+
+9e. Use the fitted model from the `glm` call to predict IGHV status for the two patients "H064", "H256" based on their expression of ENSG00000173404. Hint: Use `type = 'response` as an argument to the `predict` function. This will return the probability of the IGHV status for each patient sample to be 1.
+```{r}
+# to be filled
+```
+
+## Regression with large numbers of predictors
+10. Here we think about how to use all genes jointly to predict drug response.
+
+10a. If you are perfectly familiar with`lm` and `glm`, try to fit a linear model for predicting ibrutinib response from all genes' expression values. What happens? What are the residuals of the model?
+
+*Hint:* Using `~ .` in the formula of a `lm` call will use all remaining columns in the data as predictors, generate a wide data.frame that contains as columns the gene expression values for all genes (using `mRNA`) as columns and one column with ibrutinib response values (using `ibrutinib_response`). 
+
+```{r}
+# to be filled
+```
+
+10b. What does the following tell you? (Note: replace `df` with the name of a data.frame that you used in the previous task containing expression values for all genes and the ibrutinib response values)
+```{r}
+library(Matrix)
+model_mat <- model.matrix(ibrutinib_response ~ ., df)
+dim(model_mat)
+rankMatrix(model_mat)
+```
+
+10c. Take a look at the `glmnet` package and the `glmmet` function. This can be used to predict ibrutinib response using all genes' expression. 
+
+10d. Try to understand the following code and read up upon lasso, ridge regression and elastic net. We will not cover these topics in this course but they can be very useful for high-dimensional data. More information on linear models for high-dimensional data can be found, e.g. in Chapter 6 of https://www.statlearning.com/.
+```{r}
+library(glmnet)
+fit <- cv.glmnet(mRNA, ibrutinib_response)
+coefs <- coef(fit, fit$lambda.min) %>% as.matrix()
+nonzero_coefs <- coefs[coefs != 0,]
+nonzero_coefs
+```
+
+
+```{r}
+sessionInfo()
+```
+

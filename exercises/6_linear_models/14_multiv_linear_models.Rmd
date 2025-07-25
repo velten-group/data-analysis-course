@@ -1,0 +1,88 @@
+---
+title: "Multivariate linear regression"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+## Load relevant libraries
+We will use the tidyverse and UsingR packge. 
+
+0. Load these libraries here (and install them if needed).
+```{r}
+# to be filled
+```
+
+## Load and inspect the data
+1a. Load the New York City Marathon data using `data(nym.2002)`.
+```{r}
+# to be filled
+```
+
+1b. Use the help function or `?` to get more information on the data. 
+
+1c. Inspect the data using `head` or `View`.
+```{r}
+# to be filled
+```
+
+## Fitting a linear model with 2 predictors
+We want to find out what predicts a good finish time. 
+
+2a. Use the `lm` function to relate the finish time to age and gender of the runner. 
+```{r}
+# to be filled
+```
+
+2b. Use the `summary` function to get information on the fit from ex. 2a. How do you interpret the results? Is a linear model a good model for describing the relationship?
+```{r}
+# to be filled
+```
+
+**Technical note on categorical predictors in linear models:** Gender is a so-called *categorical variables* as it can only take a discrete set of values (here "male" and "female"). Such variables are treated different from *continuous variables* like age or height (in the last exercise). A reference category is chosen for *categorical variables* (here: female, as alphabetically the first): The reference category has a zero coefficient in the linear model, while all other categories (e.g. here male) have a coefficient that is learn by the linear model to describe the (average difference) of male samples to the reference (here: female). This works the same way with multiple categories, where every category apart from the reference category has its own coefficient in the linear model describing the shift compared to the reference category.
+
+2c. Visualize the relationship of age and finish time for male and female runners in separate panels for each gender using a scatterplot of age and finish time split by gender using `facet_wrap(~gender)`.
+```{r}
+# to be filled
+```
+
+2d. Can you add the line describing the linear relationship learnt by the model for each gender on this plot?
+```{r}
+# to be filled
+```
+
+## Adding additonal covariates to the model
+3a. Modify the data to also include information on whether the runner is from New York (NY) or not.
+```{r}
+# to be filled
+```
+
+3b. Adapt the linear model from 2a. to also consider the information on whether the runner is from New York (NY) or not.
+
+3c. Are runners from NY significantly faster than others? 
+
+3d. Make a prediction for a 36-year old male runner from NY based on your linear model of exercise 3b. How long do you expect him to take?
+```{r}
+# to be filled
+```
+
+## Advanced exercises
+4a. Use `anova` function to compare the fits obtained from the `lm` calls with and without the information on whether the runner is from New York. What does this tell you? (Note: This function compares the goodness of fit between two so-called nested models, where one model is an extension of the other model).
+```{r}
+# to be filled
+```
+
+4b. What happens if you include another variable in the model that specifies the (approx.) year of birth (calculated as 2002 - age) for each runner? 
+```{r}
+# to be filled
+```
+
+4c. Some people might actually be born one year earlier if there birthday is yet to come in the year 2002. Let's randomly subtract 1 from some birth years. Hint: Use ` sample(c(1,0), replace = TRUE, size = nrow(nym.2002))` and subtract this from the year of birth. Re-run the linear model including gender, age, runner is from NY and year of birth as predictors. How do you interpret the results? What would you expect from an anova that compares a model including gender, age, runner is from NY and year of birth to a model including only gender and runner is from NY.
+```{r}
+# to be filled
+```
+
+```{r}
+sessionInfo()
+```
+

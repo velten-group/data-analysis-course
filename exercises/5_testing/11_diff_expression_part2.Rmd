@@ -1,0 +1,80 @@
+---
+title: "Differential expression between male and female patient samples (part II)"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+Here we will test for differential expression of genes in the CLL data. Note that dedicated methods exists for the task of differential expression testing that make use of (unnormalized) counts for each gene and patient sample instead of normalized expression values. These can be much more powerful and better calibrated for RNA-seq data and we will learn more about them in the summer course.
+
+# Preparations
+0. Load the ggplot2 and dplyr library or the tidyverse collection of libraries that includes ggplot2 and dplyr.
+```{r}
+# to be filled
+```
+
+For these exercises, we will use again the CLL data from the MOFAdata package that contains different molecular read-outs on a set of patient samples.
+```{r}
+library(MOFAdata)
+data("CLL_data")
+data("CLL_covariates")
+CLL_covariates <- rownames_to_column(CLL_covariates, "patient_sample")
+```
+
+# Part I: Differential expression testing
+This was done in a separate file where you created a file called "DE_results_CLL.RDS" with your results, which we will use here.
+
+# Part II: Multiple testing correction 
+
+## Loading the testing results
+1. Re-load your dataframe with p-values calculated in exercise 6 of part I using `readRDS("DE_results_CLL.RDS")`.
+```{r}
+# to be filled
+```
+
+## Family-wise error rate
+2a. How many genes have a p-value below the threshold for a family wise error rate of 0.05 (remember this is 0.05 / total number of tests)? 
+```{r}
+# to be filled
+```
+
+2b (optional) Go back to the original expression data for some of these genes to plot a boxplot of their expression values for male and female samples as in Part I.
+
+3. Use `p.adjust` function with the Bonferroni method to control the family-wise error rate at 5%. How many values are below 0.05 after adjustement?
+```{r}
+# to be filled
+```
+
+## False discovery rate
+4. Use `p.adjust` function with the Benjamini-Hochberg method to control the false discovery rate (FDR) at 5%. How many genes are significant at a FDR of 5%?
+```{r}
+# to be filled
+```
+
+## Volcanoe plot
+5. We can visualize the results of the testing for all genes in a so-called volcanoe plot that shows 
+
+* the effect size (difference in mean gene expression between male and females) on the x-axis
+* significance (e.g. negative adjusted p-value on a log-scale) on the y-axis
+
+for all genes. 
+
+5a. For this extend the data.frame from exercise 1 by an additional column contain also the BH-adjusted p-value as obtained in exercise 3. You can also add a column to the data.frame specifying whether a gene is significant at a FDR level of 5% as TRUE or FALSE.
+```{r}
+# to be filled
+```
+
+5b. Use the data frame from 5a to make a volcanoe plot that shows the mean difference on the x-axis and `-log( BH-adjusted p-value)` on the y-axis using `geom_point`. How many genes stand out? 
+```{r}
+# to be filled
+```
+
+5c. (optional) Color the points in 5b by whether or not a gene is significant. Look up some of the genes that stand out on ensemble.org - what do you find?
+```{r}
+# to be filled
+```
+
+```{r}
+sessionInfo()
+```
+

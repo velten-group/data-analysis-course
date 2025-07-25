@@ -1,0 +1,146 @@
+---
+title: "PCA - Example on the Iris data"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# PCA on the Iris data
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+## Load and inspect the data
+0. First we load the iris data set.
+```{r}
+# to be filled
+```
+
+1. Recall how the data looked like: Use `head()` or `View()` to inspect the data. How many features and samples are in the data?
+```{r}
+# to be filled
+```
+The data contains 4 numerical measurements (features) for each flower (Sepal.Length Sepal.Width Petal.Length Petal.Width) and a label on which Species the flower is.
+
+
+2. We will again separate the label on the species and the numerical measurements (contained in the first 4 columns). Create two new objects: one matrix `iris_x` containing the numerical measurements as a matrix and one character vector  `irsi_species` containing the species label.
+```{r}
+iris_x <- as.matrix(iris[,1:4])
+irsi_species <- iris$Species
+```
+
+
+## Calculating the PCA
+3. To calculate the principal components in this data we can use the `prcomp` function. 
+
+3a. Run the following code
+```{r}
+pca.out <- prcomp(iris_x)
+```
+
+3b. Take a look at the output. What class is it? What information does it hold? What dimensions have the `rotation` and `x` matrices in the output?
+```{r}
+# to be filled
+```
+
+3c. Call the summary function on the output of the PCA. What does this tell you?
+```{r}
+# to be filled
+```
+
+3d. Make a screeplot (or elbow plot) showing the percentage of variance explained in the data for each principal component. (Hint: You can extract this from the summary object above or use `pca.out$sdev^2/sum(pca.out$sdev^2)` to recalculate them.
+```{r}
+# to be filled
+```
+
+## Visualizing the samples in a PCA plot
+
+4a. We can use the `ggfortify` package and the `autoplot` function to generate PCA plot using the ggplot syntax.
+```{r}
+library(ggfortify)
+autoplot(pca.out, colour = "Species", data = iris, scale = FALSE) +
+  theme_bw() + coord_fixed()
+```
+
+4b. We can also add the information on the feature loadings in form of a biplot by setting `loadings = TRUE`.
+```{r}
+autoplot(pca.out, data = iris, colour = 'Species',  scale = FALSE,
+         loadings = TRUE, loadings.colour = 'blue',
+         loadings.label = TRUE, loadings.label.size = 3) +
+  theme_bw() + coord_fixed()
+```
+
+4c. Answer the following questions:
+
+- How do you interpret the arrows? How does this relate to the rotation matrix in `pca.out`?
+- What is `coord_fixed` doing and why would it be useful?
+
+4d. By setting the arguments `x` and `y` in the `autoplot` function we can also visualize higher-order principal components. Use this to generate a plot of components 3 versus 4. Again you can add the loading information in terms of a biplot.
+```{r}
+# to be filled
+```
+
+
+4e. Generate the PCA plot using the standard ggplot commands starting from the `pca.out` object (without using `autoplot` function).
+```{r}
+# to be filled
+```
+
+## Visualizing cluster in the PCA plot
+5. Use k-means clustering as in the previous exercise to cluster the data into 3 clusters and visualize the three clusters on the PCA plot in 4e.
+```{r}
+# to be filled
+```
+
+
+## Non-linear dimension reduction (advanced, optional)
+
+### tSNE
+6a. Calculate and plot a tSNE embedding of the data using `Rtsne`. (Note: Install and load the library `Rtsne` for this, Use the option `check_duplicates = FALSE` in `Rtsne` to avoid errors due to duplicated data points.)
+```{r}
+# to be filled
+```
+
+6b. Extract the tSNE coordinates from the output of 6a. (Hint: 'Y' component of the output) and make a data.frame with the 2 tSNE dimensions and species label for each flower.
+```{r}
+# to be filled
+```
+
+6c. Plot the tSNE coloured by species. How does it relate to PCA? 
+```{r}
+# to be filled
+```
+
+6d. How do the parameters of the algorithm affect the embedding? Test different perplexity parameters (e.g. 2,5,10, 40) and repeat steps 6a-c. 
+```{r}
+# to be filled
+```
+
+### UMAP
+7a. Calculate and plot a UMAP embedding of the data. Hint: Install and load the `umap` package for this. 
+```{r}
+# to be filled
+```
+
+7b. Extract the UMAP coordinates from the output of 7a. (Hint: 'layout' component of the output) and make a data.frame with the 2 UMAP dimensions and species label for each flower.
+```{r}
+# to be filled
+```
+
+7c. Plot the UMAP coloured by species. How does it relate to PCA and tSNE? 
+```{r}
+# to be filled
+```
+
+7d. How do the parameters of the algorithm affect the embedding? Test different `n_neighbors` parameters (e.g. 5,10, 20, 50) and repeat steps 7a-d.
+```{r}
+# to be filled
+```
+
+
+## sessionInfo
+```{r}
+sessionInfo()
+```
+

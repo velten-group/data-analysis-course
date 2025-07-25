@@ -15,13 +15,15 @@ getwd()
 
 Let's have a try to read-in the data:
 ```{r}
-filename <- "femaleMiceWeights.csv"
+filename <- "../../data/femaleMiceWeights.csv"
 mice_data <- read.csv(filename)
 ```
 
 If the file is in a different directory you can modify the argument `femaleMiceWeights.csv` to a relative path, e.g. `data/femaleMiceWeights.csv` if the file is in a subdirectory called `data` of you current directory, or to an absolute path, e.g `/Users/bvelten/data/femaleMiceWeights.csv`. RStudio helps with auto-completion here to find the file. To move one level of directories up in relative paths you can use `..`, e.g. `../data/femaleMiceWeights.csv` if the file is in a data directory located one folder up from your current working directory. Find the file and adjust the file path above if needed to read in the data!
 
 # First glimpse at the data
+
+## What class is the data?
 The function `read.csv` returns the data in form of a `data.frame`. (Use `class` to verify this as showns below.)
 
 ```{r}
@@ -30,6 +32,7 @@ class(mice_data)
 
 This class is very convenient for analyzing data that contains measurements for several variables that are of different types, e.g. some are characters (here: Diet), others are numeric (here: Bodyweight).
 
+## How does the data look like?
 To take a first look at the data the function `head()` is useful as it prints out the first rows of your data.frame. This allows you to get a first idea of the data without printing out the whole data.frame (can be very messy e.g. for data with 20,000 genes etc). For each variable (columns) this also tells you what data type the values of this column have. Here for example, "Diet" contains characters (chr), "Bodyweight" contains doubles (dbl) (a numeric data type for floating point numbers).
 ```{r}
 head(mice_data)
@@ -41,11 +44,13 @@ head(mice_data)
 View(mice_data)
 ```
 
+## How many mice are in the data?
 The function `nrow` tells you how many rows are in the table. Here, each row corresponds to one mouse.
 ```{r}
 nrow(mice_data)
 ```
 
+## How to select one mouse or multiple mice from the data?
 To select an individual value or row in the data frame we can use `[row index, column index or name]`, e.g. extracting the weight value of the second mouse in the data frame.
 ```{r}
 mice_data[2,"Bodyweight"]
@@ -65,6 +70,7 @@ mice_data[2,]
 mice_data[2:5,]
 ```
 
+## How to extract information on each mouse from the columns?
 We can access a column in the data frame using `$` or `[, column_name]`.
 
 For example, let's take a look at what diets are contained in this data.frame. With `$Diet` we extract a character vector with entries specifying the diet for each mouse.
@@ -87,6 +93,7 @@ table(mice_data$Diet)
 # Data manipulation using dplyr
 The `dplyr` package provides a lot of convenient functions to work with data.frames in R, for example filtering and subsetting the data or summarising the data.
 
+## Installing and loading dplyr
 Let's first install the package using `install.packages("dplyr")`.
 ```{r}
 # install.packages("dplyr")
@@ -99,7 +106,7 @@ library(dplyr)
 
 Now we can use the functions provided in the dplyr package in our code.
 
-## Using filter and select
+## Using filter to subset the data frame
 For example, the function `filter` allows us to subset a data frame based on conditions that you can specify.
 
 If we want to only keep mise that are on the `chow` diet, we subset and filter the full data and create a new data frame containing only mice on the `chow` diet:
@@ -113,7 +120,7 @@ head(chow_mice)
 nrow(chow_mice)
 ```
 
-
+## Using select to select columns in the data
 With the function `select` we can select a specific column in the data frame
 ```{r}
 chow_mice_weights <- select(chow_mice,Bodyweight)
@@ -131,7 +138,7 @@ chow_mice_weights <- filter(chow_mice, Diet=="chow") %>% select(Bodyweight)
 
 In the second task (`select`), we no longer have to specify the object we are editing since it is whatever comes from the previous call. 
 
-
+## Calculating the average body weight of mice
 To calculate the average body weights of mouse on the chow diet we can use the function `mean`. Note that this function requires a vector as input and cannot be applied to a data.frame object. Therefore, we use `$` to extract a numeric vector from the data.frame and then use the `mean` function to calculate the mean. 
 ```{r}
 mean(chow_mice_weights$Bodyweight)
@@ -151,18 +158,21 @@ Other important functions in the `dplyr` package are:
 - `summarise`: allow you to summarise values in the dataframe (see next exercise)
 - `group_by`: allows you to perform all dplyr functions by groups (see next exercise)
 
+### mutate
 For example, we cen add a new column defininf the bodyweights of mice in kg.
 ```{r}
 mice_data_new <- mutate(mice_data, Bodyweight_in_kg = Bodyweight/1000)
 head(mice_data_new)
 ```
 
+### rename
 We can rename an existing column.
 ```{r}
 mice_data_new_renamed <- rename(mice_data_new, Bodyweight_g = Bodyweight)
 head(mice_data_new_renamed)
 ```
 
+### arrange
 And we can arrange the rows by Bodyweight to have the heaviest mice first.
 ```{r}
 # lightest first
