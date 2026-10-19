@@ -9,9 +9,7 @@ This repository contains the materials for the course on Data Analysis for Life 
   
 	If you have problems with the installation, take a look at [this video](https://www.youtube.com/watch?v=p8F_wreHTzw) on how to install R and RStudio.
 
-3. Once you have installed R and RStudio, please go to the [exercises](exercises/) page. There you will find two exercises to verify that everyone has a working R installation setup before the course and provides a recap on first steps in R. *Please take a look at both exercises before November 2 and hand in the output in via Mattermost (see details in the exercises)*
-
-If you encounter any problems, get help via the Mattermost channel.
+3. Once you have installed R and RStudio, please go to the [exercises](exercises/) page. There you will find two exercises to verify that everyone has a working R installation setup before the course and provides a recap on first steps in R. *Please take a look at both exercises before the start of the course.*
 
 
 ## Literature
