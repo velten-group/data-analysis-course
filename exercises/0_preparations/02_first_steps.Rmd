@@ -11,7 +11,7 @@ This file recapitulates the first steps of R programming. If you are completely 
 * Chapter 1-3 of Rafael A. Irizarry's [*Introduction to Data Science*](http://rafalab.dfci.harvard.edu/dsbook/introduction.html)
 * [Babraham R Course](https://www.bioinformatics.babraham.ac.uk/training/Introduction_to_R/Introduction%20to%20R%20course%20booklet.pdf)
 
-<mark>**Your task**: Please generate a html version of this file (following the steps described below) and *hand this in via Mattermost*.</mark>
+<mark>**Your task**: Please generate a html version of this file (following the steps described below).</mark>
 
 Don't worry if you encounter problems, we will jointly go through the file on the first day of the course.
 

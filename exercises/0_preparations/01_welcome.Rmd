@@ -14,9 +14,9 @@ If you are completely new to R or think a recap would be helpful, I would recomm
 * Chapter 1-3 of Rafael A. Irizarry's [*Introduction to Data Science*](http://rafalab.dfci.harvard.edu/dsbook/introduction.html)
 * [Babraham R Course](https://www.bioinformatics.babraham.ac.uk/training/Introduction_to_R/Introduction%20to%20R%20course%20booklet.pdf)
 
-<mark>**Your task**: Please generate a html version of this file (following the steps described below) and *hand this in via Mattermost*.</mark> 
+<mark>**Your task**: Please generate a html version of this file (following the steps described below).</mark> 
 
-Make sure you get help if you encounter any problems via the Mattermost channel.
+Don't worry if you encounter some problems, we will resolve them together at the beginning of the course.
 
 
 # First steps with R using RStudio and RMarkdown
