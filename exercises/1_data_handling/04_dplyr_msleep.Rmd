@@ -5,9 +5,9 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
-For these exercises, we will use a new dataset related to mammalian sleep as provided in Data Analysis for the Life Sciences (Rafael Irizarry, Mike Love). Download the CSV file from this location: [https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/msleep_ggplot2.csv](https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/msleep_ggplot2.csv).
+For these exercises, we will use a new dataset related to mammalian sleep as provided in Data Analysis for the Life Sciences (Rafael Irizarry, Mike Love). Download the CSV file mseep_ggplot2.csv from the data folder of our github repository or from this location: [https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/msleep_ggplot2.csv](https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/msleep_ggplot2.csv).
  
- We are going to read in this data, then test your knowledge of they key `dplyr` functions. We are also going to review two different *classes*: data frames and vectors.
+We are going to read in this data, then test your knowledge of the key `dplyr` functions. We are also going to review two different *classes*: data frames and vectors.
  
 ###  0 - Load necessary libraries
  0. Load the dplyr library or the tidyverse collection of libraries that includes dplyr.
