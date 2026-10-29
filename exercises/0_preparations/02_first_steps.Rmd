@@ -373,14 +373,14 @@ library(ComplexHeatmap)
 
 
 ### Cheat Sheet
-An overview over important functions, data types and data structures in R is summarized in this [cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf). 
+An overview over important functions, data types and data structures in R is summarized in this [cheat sheet](https://iqss.github.io/dss-workshops/r/intro/base-r-cheat-sheet.pdf). 
 
 <mark>**Task 10: Take a look at the cheat sheet and save it for later use.** </mark>
 
 ### Final notes
 At the end of each Rmd file it is useful to print the output of the `sessionInfo()` function. This is important for reproducibility as it helps you and others to go back to a html report, which you did in the past and see which operating system, R version and package versions you used.
 
-<mark>**Task 11: Knit the .Rmd file with all your changes and solutions by clicking on the "Knit button" for the tasks and send the html to Britta Velten via Mattermost. Make sure to change the author name to your name before knitting. Don't worry if you encounter problems, we will jointly go through the file on the first day of the course ** </mark>
+<mark>**Task 11: Knit the .Rmd file with all your changes and solutions by clicking on the "Knit button" for the tasks. Make sure to change the author name to your name before knitting. Don't worry if you encounter problems, we will jointly go through the file on the first day of the course ** </mark>
 
 Optional tasks: 
 
